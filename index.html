@@ -154,6 +154,7 @@
               <p>רוב משרדי הממשלה מקבלים פניות דרך טופס באתר. מעתיקים את המכתב ומדביקים אותו בטופס. רצוי לבחור בטופס נושא כמו "מחמאה", "הוקרה" או "משוב".</p>
               <div class="btn-row">
                 <button type="button" class="btn btn-primary" id="copy-btn">העתקת המכתב</button>
+                <a class="btn btn-ghost" id="form-link" target="_blank" rel="noopener">לטופס פניות הציבור</a>
                 <a class="btn btn-ghost" id="office-link" target="_blank" rel="noopener">לאתר הארגון</a>
                 <a class="btn btn-ghost" id="search-link" target="_blank" rel="noopener">חיפוש "פניות הציבור"</a>
               </div>
@@ -169,11 +170,13 @@
             <div class="send-card">
               <h4>3. מכתב מודפס</h4>
               <p>אפשר להדפיס, לחתום ולמסור ביד בסניף או לשלוח בדואר. בחלון ההדפסה אפשר גם לשמור כקובץ PDF.</p>
+              <p class="postal" id="postal" hidden></p>
               <div class="btn-row">
                 <button type="button" class="btn btn-ghost" id="print-btn">הדפסה / שמירה כ-PDF</button>
               </div>
             </div>
           </div>
+          <p class="source-note" id="source-note" hidden></p>
           <p class="toast" id="toast" role="status" aria-live="polite"></p>
 
           <div class="nav-row">

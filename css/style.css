@@ -189,3 +189,6 @@ textarea { resize: vertical; }
   }
   @page { margin: 2.5cm 2cm; }
 }
+
+.postal { color: var(--text) !important; font-weight: 600; }
+.source-note { color: var(--muted); font-size: .9rem; margin-top: 16px; }

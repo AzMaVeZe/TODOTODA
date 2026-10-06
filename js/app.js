@@ -126,6 +126,16 @@
   var toEmail = document.getElementById("toEmail");
   var officeLink = document.getElementById("office-link");
   var searchLink = document.getElementById("search-link");
+  var formLink = document.getElementById("form-link");
+  var postalEl = document.getElementById("postal");
+  var sourceNote = document.getElementById("source-note");
+
+  function setLink(el, url) {
+    if (url) el.href = url;
+    el.hidden = !url;
+  }
+
+  toEmail.addEventListener("input", function () { toEmail.dataset.userEdited = "1"; });
 
   function prepareLetter() {
     var d = data();
@@ -133,13 +143,34 @@
     subjectEl.value = result.subject;
     letterEl.value = result.body;
 
-    if (d.office && d.office.email && !toEmail.value) toEmail.value = d.office.email;
+    var o = d.office || {};
+    // המייל מהמאגר ממולא רק אם המשתמש לא כתב כתובת משלו
+    if (!toEmail.dataset.userEdited) toEmail.value = o.email || "";
 
-    if (d.office && d.office.site) {
-      officeLink.href = d.office.site;
-      officeLink.hidden = false;
+    setLink(formLink, o.form);
+    setLink(officeLink, o.form === o.site ? "" : o.site);
+
+    if (o.postal) {
+      postalEl.textContent = "כתובת למשלוח בדואר: " + o.postal;
+      postalEl.hidden = false;
     } else {
-      officeLink.hidden = true;
+      postalEl.hidden = true;
+    }
+
+    sourceNote.innerHTML = "";
+    if (o.sources && o.sources.length) {
+      sourceNote.append("פרטי הקשר נלקחו מפרסומים רשמיים ועשויים להשתנות. ");
+      o.sources.forEach(function (url, i) {
+        var a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = "מקור" + (o.sources.length > 1 ? " " + (i + 1) : "");
+        sourceNote.append(a, " ");
+      });
+      sourceNote.hidden = false;
+    } else {
+      sourceNote.hidden = true;
     }
     searchLink.href = "https://www.google.com/search?q=" +
       encodeURIComponent(d.officeName + " פניות הציבור");
@@ -191,6 +222,7 @@
     form.reset();
     officeNameWrap.hidden = true;
     toEmail.value = "";
+    delete toEmail.dataset.userEdited;
     go(1);
   });
 })();
