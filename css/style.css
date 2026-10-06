@@ -295,3 +295,11 @@ textarea { resize: vertical; }
   }
   @page { margin: 2.5cm 2cm; }
 }
+
+/* --- יצירת קשר --- */
+.contact-form { margin-top: 12px; }
+.hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); opacity: 0; pointer-events: none; }
+.contact-status { margin: 12px 0 0; font-weight: 600; }
+.contact-status.ok { color: var(--primary); }
+.contact-status.fail { color: var(--error); }
+button:disabled { opacity: .6; cursor: wait; }

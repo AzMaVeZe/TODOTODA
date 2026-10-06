@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src https://api.web3forms.com; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
   <title>תודה תודה – מכתב תודה לפקיד או לפקידה, בחינם</title>
   <meta name="description" content="כתבו בשלוש דקות מכתב תודה והוקרה לפקיד או לפקידה שעזרו לכם – בביטוח לאומי, בקופת חולים, בעירייה או בכל משרד ממשלתי – ושלחו אותו לפניות הציבור. בחינם, לזכרה של שושנה כהנא ז״ל.">
   <link rel="canonical" href="https://todotoda.azma.app/">
@@ -278,13 +278,45 @@
     <section id="privacy" class="wrap section legal" aria-labelledby="privacy-title">
       <h2 id="privacy-title">פרטיות ותנאי שימוש</h2>
       <p>המכתב נוצר כולו בדפדפן שלכם. מה שתמלאו (השם שלכם, פרטי הקשר ושם הפקיד/ה) לא נשמר באתר ולא מגיע אלינו או לאף גורם אחר, אלא רק לגוף שאליו תבחרו לשלוח את המכתב. את השליחה אתם עושים בעצמכם. באתר אין עוגיות, אין כלי מעקב ואין סטטיסטיקות. כמו בכל אתר, חברת האחסון (GitHub) מקבלת נתונים טכניים כמו כתובת IP כדי להציג לכם את הדף.</p>
+      <p>פניות שנשלחות בטופס יצירת הקשר עוברות דרך שירות Web3Forms ומגיעות אלינו במייל, רק כדי לטפל בהן ולחזור אליכם.</p>
       <p>השימוש באתר חינם וניתן כמות שהוא. מי שכותב את המכתב ושולח אותו אחראי לתוכנו ולנכונותו. פרטי הקשר של הגופים נלקחו מפרסומים רשמיים ועשויים להשתנות, ולכן כדאי לוודא אותם באתר הגוף. אין התחייבות שהמכתב יועבר לממונים או שתתקבל עליו תשובה.</p>
     </section>
 
     <section id="accessibility" class="wrap section legal" aria-labelledby="a11y-title">
       <h2 id="a11y-title">הצהרת נגישות</h2>
-      <p>האתר נבנה בהתאם לתקן הישראלי ת״י 5568 (WCAG 2.0 ברמה AA): הוא ניתן לתפעול מלא במקלדת, מותאם לקוראי מסך ולהגדלת טקסט, ומתאים לטלפון ולמצב כהה. האתר נבדק בכלים אוטומטיים ובדפדפנים נפוצים. אם נתקלתם בבעיית נגישות, נשמח שתספרו לנו <a href="https://github.com/AzMaVeZe/TODOTODA/issues/new" target="_blank" rel="noopener">בטופס הפנייה<span class="sr-only"> (נפתח בחלון חדש)</span></a>, ונטפל בה בהקדם.</p>
+      <p>האתר נבנה בהתאם לתקן הישראלי ת״י 5568 (WCAG 2.0 ברמה AA): הוא ניתן לתפעול מלא במקלדת, מותאם לקוראי מסך ולהגדלת טקסט, ומתאים לטלפון ולמצב כהה. האתר נבדק בכלים אוטומטיים ובדפדפנים נפוצים. אם נתקלתם בבעיית נגישות, נשמח שתספרו לנו <a href="#contact-us">בטופס יצירת הקשר</a>, ונטפל בה בהקדם.</p>
       <p class="hint">עודכן: אוקטובר 2026.</p>
+    </section>
+    <section id="contact-us" class="wrap section" aria-labelledby="contact-title">
+      <h2 id="contact-title">יצירת קשר</h2>
+      <p class="hint">שאלה, הצעה, פרטי קשר שגויים של משרד או בעיית נגישות? נשמח לשמוע.</p>
+      <form id="contact-form" class="step-panel contact-form" novalidate>
+        <label for="c-topic">נושא הפנייה</label>
+        <select id="c-topic" name="topic">
+          <option>שאלה או הצעה</option>
+          <option>פרטי קשר שגויים של משרד</option>
+          <option>בעיית נגישות</option>
+          <option>אחר</option>
+        </select>
+
+        <label for="c-message">תוכן הפנייה <span class="req" aria-hidden="true">*</span></label>
+        <textarea id="c-message" name="message" rows="5" maxlength="3000" aria-describedby="c-message-err"></textarea>
+        <p class="field-error" id="c-message-err" hidden>נא לכתוב את תוכן הפנייה</p>
+
+        <label for="c-name">שם</label>
+        <input id="c-name" name="name" type="text" autocomplete="name" maxlength="100">
+
+        <label for="c-reply">מייל או טלפון לחזרה</label>
+        <input id="c-reply" name="reply" type="text" dir="auto" maxlength="150">
+
+        <!-- מלכודת לבוטים: שדה מוסתר שאנשים לא ממלאים -->
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="nav-row">
+          <button type="submit" class="btn btn-primary" id="c-submit">שליחת הפנייה</button>
+        </div>
+        <p class="contact-status" id="c-status" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 
@@ -295,7 +327,7 @@
       <p class="footer-links">
         <a href="#privacy">פרטיות ותנאי שימוש</a> ·
         <a href="#accessibility">הצהרת נגישות</a> ·
-        <a href="https://github.com/AzMaVeZe/TODOTODA/issues/new" target="_blank" rel="noopener">יצירת קשר ודיווח על פרטים שגויים<span class="sr-only"> (נפתח בחלון חדש)</span></a>
+        <a href="#contact-us">יצירת קשר ודיווח על פרטים שגויים</a>
       </p>
     </div>
   </footer>
@@ -308,5 +340,6 @@
   <script src="js/offices.js"></script>
   <script src="js/letter.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/contact.js"></script>
 </body>
 </html>
