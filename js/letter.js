@@ -107,7 +107,7 @@
     var det = details(d);
     if (det) who += " (" + det + ")";
 
-    var subject = "מחמאה ומכתב הוקרה " + n.toFirst + (office ? " – " + office : "") + " (אין זו תלונה)";
+    var subject = "מחמאה ומכתב הוקרה " + n.toFirst + (office ? " – " + office : "");
     var her = g(f, "אליו", "אליה");
     var onHer = g(f, "עליו", "עליה");
     var fileLine = g(f, "בתיק האישי שלו", "בתיק האישי שלה");
