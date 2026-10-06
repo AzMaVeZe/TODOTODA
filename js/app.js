@@ -344,7 +344,7 @@
   });
 
   // --- סיום ושיתוף ---
-  var shareText = "כתבתי מכתב תודה לפקיד/ה שעזר/ה לי 🙏\nתלונות הם שומעים כל יום – הגיע הזמן לתודה.\nלוקח 3 דקות, בחינם:";
+  var shareText = "כתבתי מכתב תודה לפקיד/ה שעזר/ה לי 🙏\nתלונות הם שומעים כל יום – הגיע הזמן לתודה.\nתעשו תודה גם אתם, זה לוקח 3 דקות ובחינם:";
   document.getElementById("wa-share").href =
     "https://wa.me/?text=" + encodeURIComponent(shareText + "\n" + SITE_URL);
   var nativeShare = document.getElementById("native-share");
