@@ -27,10 +27,14 @@
     data.append("access_key", ACCESS_KEY);
     data.append("subject", "תודה תודה – פנייה חדשה: " + topic);
     data.append("from_name", "אתר תודה תודה");
-    data.append("נושא", topic);
-    data.append("תוכן", message.value.trim());
-    data.append("שם", form.elements.name.value.trim());
-    data.append("לחזרה", form.elements.reply.value.trim());
+    // שמות השדות באנגלית: Web3Forms משבש שמות שדות בעברית במייל (הערכים עצמם מוצגים תקין)
+    var reply = form.elements.reply.value.trim();
+    data.append("Topic", topic);
+    data.append("Message", message.value.trim());
+    data.append("Name", form.elements.name.value.trim());
+    data.append("Reply to", reply);
+    // אם הושאר מייל, כפתור "השב" במייל יפנה ישירות אליו
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reply)) data.append("email", reply);
     if (form.elements.botcheck.checked) data.append("botcheck", "on");
     submit.disabled = true;
     status.className = "contact-status";
