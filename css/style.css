@@ -1,15 +1,50 @@
+/* גופנים מאוחסנים באתר עצמו (רישיון SIL OFL), כדי שלא יישלח מידע לגוגל */
+@font-face {
+  font-family: "Assistant";
+  src: url("../fonts/assistant-hebrew.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant";
+  src: url("../fonts/assistant-latin.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  src: url("../fonts/frank-hebrew.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  src: url("../fonts/frank-latin.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
+  color-scheme: light dark;
   --bg: #faf7f2;
   --surface: #ffffff;
   --text: #22252b;
-  --muted: #5d6470;
-  --border: #ddd6ca;
-  --primary: #1f4e79;
-  --primary-hover: #163a5c;
+  --muted: #5a5f68;
+  --border: #e3dccf;
+  --field-border: #8f8574;
+  --primary: #2f5d50;
+  --primary-hover: #234a3f;
   --primary-text: #ffffff;
-  --accent: #b08a3e;
+  --accent: #82621f;
   --accent-soft: #f3ead8;
+  --paper: #fffdf8;
+  --paper-text: #2a2622;
   --error: #b42318;
+  --focus: #2f5d50;
   --radius: 12px;
   --font: "Assistant", "Arial Hebrew", Arial, sans-serif;
   --font-letter: "Frank Ruhl Libre", "David", serif;
@@ -17,17 +52,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #15181d;
-    --surface: #1e2229;
+    --bg: #14171b;
+    --surface: #1d2126;
     --text: #ece8e1;
-    --muted: #a7adb8;
-    --border: #353b45;
-    --primary: #7fb2e5;
-    --primary-hover: #a3c8ee;
-    --primary-text: #0f1a26;
+    --muted: #aab0ba;
+    --border: #343a42;
+    --field-border: #737b87;
+    --primary: #8cc7b4;
+    --primary-hover: #a9d8c8;
+    --primary-text: #0e1c17;
     --accent: #d4b06a;
-    --accent-soft: #2b261c;
+    --accent-soft: #2a261d;
     --error: #ff8a80;
+    --focus: #8cc7b4;
   }
 }
 
@@ -52,7 +89,7 @@ h2 { font-size: 1.75rem; }
 
 a { color: var(--primary); }
 
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 .skip-link {
   position: absolute; inset-inline-start: 8px; top: -60px;
@@ -66,23 +103,34 @@ a { color: var(--primary); }
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+[hidden] { display: none !important; }
+
 /* --- כותרת --- */
 .site-header { border-bottom: 1px solid var(--border); background: var(--surface); }
-.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px; flex-wrap: wrap; }
-.brand { margin: 0; font-weight: 700; font-size: 1.35rem; color: var(--primary); }
-.site-header nav { display: flex; gap: 16px; flex-wrap: wrap; }
-.site-header nav a { text-decoration: none; color: var(--text); font-weight: 600; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 6px; }
+.brand {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  font-family: var(--font-letter); font-weight: 700; font-size: 1.4rem;
+  color: var(--primary); text-decoration: none;
+}
+.site-header nav { display: flex; gap: 4px; }
+.site-header nav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px;
+  text-decoration: none; color: var(--text); font-weight: 600;
+}
 .site-header nav a:hover { color: var(--primary); }
+@media (max-width: 560px) { .nav-extra { display: none !important; } }
 
 .hero { background: var(--accent-soft); padding: 56px 0; text-align: center; }
 .memorial-line { color: var(--accent); font-weight: 700; letter-spacing: .02em; margin: 0 0 8px; }
 .hero h1 { font-family: var(--font-letter); font-size: clamp(2rem, 6vw, 3rem); }
-.lead { font-size: 1.25rem; color: var(--muted); max-width: 620px; margin: 0 auto 24px; }
+.lead { font-size: 1.2rem; color: var(--muted); max-width: 640px; margin: 0 auto 24px; }
+.hero-note { color: var(--muted); font-size: 1rem; margin: 14px 0 0; }
 
 /* --- כפתורים --- */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-height: 44px; padding: 8px 20px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center; text-align: center;
+  min-height: 44px; padding: 8px 20px; border-radius: 10px;
   font: inherit; font-weight: 700; cursor: pointer; text-decoration: none;
   border: 2px solid var(--primary);
 }
@@ -91,11 +139,15 @@ a { color: var(--primary); }
 .btn-ghost { background: transparent; color: var(--primary); }
 .btn-ghost:hover { background: var(--accent-soft); }
 .btn-lg { font-size: 1.25rem; padding: 12px 32px; }
-.btn[hidden] { display: none; }
+
+.link-btn {
+  background: none; border: 0; padding: 0; font: inherit; color: var(--primary);
+  text-decoration: underline; cursor: pointer; min-height: 44px;
+}
 
 /* --- שלבים --- */
 .steps {
-  list-style: none; padding: 0; margin: 0 0 24px;
+  list-style: none; padding: 0; margin: 0 0 8px;
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
 }
 .steps li {
@@ -108,53 +160,90 @@ a { color: var(--primary); }
 }
 .steps li.active { color: var(--primary); border-color: var(--primary); font-weight: 700; }
 .steps li.done { color: var(--text); border-color: var(--accent); }
+.steps li.done span { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.step-caption { margin: 0 0 16px; color: var(--muted); font-weight: 600; }
 @media (max-width: 560px) {
   .steps li { font-size: 0; gap: 0; justify-content: center; }
   .steps li span { font-size: .85rem; }
 }
 
 /* --- טופס --- */
+.req-note { margin: 0 0 12px; }
 .step-panel {
   border: 1px solid var(--border); border-radius: var(--radius);
   background: var(--surface); padding: 24px; margin: 0;
 }
-.step-panel legend { font-size: 1.4rem; font-weight: 700; padding: 0 8px; }
+.step-panel legend {
+  float: right; width: 100%; padding: 0; margin: 0 0 4px;
+  font-family: var(--font-letter); font-size: 1.5rem; font-weight: 700;
+}
+.step-panel legend + * { clear: both; }
+.step-panel legend:focus, .done-panel h3:focus { outline: none; }
 
 label, .label { display: block; font-weight: 600; margin: 18px 0 6px; }
 .req { color: var(--error); }
 .hint { color: var(--muted); font-size: 1rem; margin: 6px 0 0; }
+.field-error { color: var(--error); font-weight: 600; font-size: 1rem; margin: 6px 0 0; }
+.field-error::before { content: "⚠ "; }
 
-input[type="text"], input[type="email"], input[type="date"], select, textarea {
+input[type="text"], input[type="email"], input[type="date"], input[type="time"], select, textarea {
   width: 100%; font: inherit; color: var(--text); background: var(--bg);
-  border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 12px; min-height: 44px;
+  border: 1.5px solid var(--field-border); border-radius: 10px; padding: 10px 12px; min-height: 44px;
 }
-input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
-[aria-invalid="true"] { border-color: var(--error) !important; }
+input:disabled { opacity: .5; }
+::placeholder { color: var(--muted); opacity: 1; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+[aria-invalid="true"], .choice-row[aria-invalid="true"] .chip { border-color: var(--error) !important; }
 textarea { resize: vertical; }
 
 .choice-row, .choice-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 560px) { .choice-grid { display: grid; grid-template-columns: 1fr 1fr; } }
 .chip {
   display: inline-flex; align-items: center; gap: 8px; margin: 0;
-  border: 1.5px solid var(--border); border-radius: 999px; padding: 8px 16px;
+  border: 1.5px solid var(--field-border); border-radius: 999px; padding: 8px 16px;
   cursor: pointer; font-weight: 600; background: var(--bg); min-height: 44px;
 }
 .chip:has(input:checked) { border-color: var(--primary); background: var(--accent-soft); color: var(--primary); }
-.chip input { width: 18px; height: 18px; accent-color: var(--primary); margin: 0; }
+.chip:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.chip input { width: 18px; height: 18px; accent-color: var(--primary); margin: 0; flex: none; }
 
-.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; margin-top: 22px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; margin-top: 14px; }
 .check input { width: 22px; height: 22px; margin-top: 3px; accent-color: var(--primary); flex: none; }
+
+.more { margin-top: 20px; border-top: 1px dashed var(--border); padding-top: 8px; }
+.more summary { cursor: pointer; font-weight: 700; color: var(--primary); min-height: 44px; display: flex; align-items: center; }
 
 .nav-row { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; flex-wrap: wrap; }
 .nav-row .btn-primary:only-child { margin-inline-start: auto; }
 
-.letter-text { font-family: var(--font-letter); font-size: 1.15rem; line-height: 1.8; background: var(--surface); }
-
-.send-title { margin-top: 32px; }
-.send-options { display: grid; gap: 16px; }
-.send-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; background: var(--bg); }
+/* --- שלב 4: המכתב --- */
+.ready-lead { font-size: 1.15rem; margin: 0 0 8px; }
+.jump { font-weight: 700; }
+.letter-text {
+  font-family: var(--font-letter); font-size: 1.1rem; line-height: 1.65;
+  background: var(--paper); color: var(--paper-text);
+  border: 1px solid #e8dfcf; border-top: 4px solid var(--accent); border-radius: 4px;
+  padding: 28px 24px; max-width: 68ch; display: block; margin-inline: auto;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(60,40,10,.08);
+}
+.send { margin-top: 32px; }
+.send h3 { font-size: 1.4rem; }
+.tip { background: var(--accent-soft); border-inline-start: 4px solid var(--accent); padding: 10px 14px; border-radius: 6px; margin: 0 0 16px; }
+.send-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; background: var(--bg); margin-bottom: 14px; }
+.send-card.primary { border: 2px solid var(--primary); }
 .send-card h4 { font-size: 1.15rem; margin: 0 0 6px; }
-.send-card p { margin: 0 0 12px; color: var(--muted); font-size: 1rem; }
+.send-card p { margin: 0 0 8px; color: var(--muted); font-size: 1rem; }
+.mini-steps { margin: 0 0 8px; padding-inline-start: 22px; color: var(--muted); font-size: 1rem; }
+.postal { color: var(--text) !important; font-weight: 600; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.other-links { display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: center; }
+.other-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.source-note { color: var(--muted); font-size: .95rem; margin-top: 12px; }
+.source-note a { display: inline-block; padding: 10px 4px; }
+
+.done-panel { text-align: center; }
+.done-panel h3 { font-family: var(--font-letter); font-size: 2rem; }
+.done-panel .btn-row { justify-content: center; }
 
 .toast {
   position: fixed; bottom: 20px; inset-inline: 16px; margin: 0 auto; max-width: 480px;
@@ -165,30 +254,44 @@ textarea { resize: vertical; }
 .toast.show { opacity: 1; transform: none; }
 
 /* --- על שושנה --- */
-.memorial { background: var(--surface); border-block: 1px solid var(--border); text-align: center; }
+.memorial { background: var(--surface); border-block: 1px solid var(--border); text-align: center; padding-block: 72px; }
 .memorial h2 { font-family: var(--font-letter); }
-.memorial p { font-size: 1.2rem; }
-.blessing { font-family: var(--font-letter); color: var(--accent); font-size: 1.35rem !important; }
+.memorial h2::before {
+  content: ""; display: block; width: 48px; height: 2px; background: var(--accent); margin: 0 auto 20px;
+}
+.memorial p { font-family: var(--font-letter); font-size: 1.25rem; line-height: 1.8; max-width: 56ch; margin-inline: auto; }
+.blessing { color: var(--accent); font-size: 1.4rem !important; }
 
-.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-.how-grid > div { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
-.how-grid strong { font-size: 1.2rem; color: var(--primary); }
+/* --- איך זה עובד --- */
+.how-grid { list-style: none; padding: 0; margin: 0; counter-reset: how; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.how-grid li { counter-increment: how; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+.how-grid li::before {
+  content: counter(how); display: inline-grid; place-items: center; width: 30px; height: 30px;
+  border-radius: 50%; background: var(--accent); color: var(--surface); font-weight: 700; margin-bottom: 8px;
+}
+.how-grid strong { display: block; font-size: 1.2rem; color: var(--primary); }
 .how-grid p { margin: 6px 0 0; color: var(--muted); }
-.privacy { margin-top: 24px; color: var(--muted); }
+
+.legal { padding-block: 24px; }
+.legal h2 { font-size: 1.3rem; }
+.legal p { color: var(--muted); font-size: 1rem; }
 
 .site-footer { padding: 24px 0; text-align: center; color: var(--muted); font-size: .95rem; border-top: 1px solid var(--border); }
+.site-footer p { margin: 6px 0; }
+.footer-links a { display: inline-block; padding: 10px 2px; }
 
 #print-area { display: none; }
 
+@media (prefers-reduced-motion: reduce) {
+  .toast { transition: none; }
+}
+
 @media print {
-  body > *:not(#print-area) { display: none !important; }
-  #print-area { display: block !important; }
+  body.print-letter-only > *:not(#print-area) { display: none !important; }
+  body.print-letter-only #print-area { display: block !important; }
   .print-letter {
     white-space: pre-wrap; font-family: var(--font-letter); font-size: 13pt;
     line-height: 1.8; color: #000; direction: rtl;
   }
   @page { margin: 2.5cm 2cm; }
 }
-
-.postal { color: var(--text) !important; font-weight: 600; }
-.source-note { color: var(--muted); font-size: .9rem; margin-top: 16px; }
