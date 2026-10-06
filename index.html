@@ -3,24 +3,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>תודה תודה – תלונות הם שומעים כל יום. הגיע הזמן לתודה.</title>
-  <meta name="description" content="כתבו בקלות מכתב תודה והוקרה לפקיד או לנותן שירות שעשה עבודה טובה, ושלחו אותו לממונים עליו. לזכרה של שושנה כהנא ז&quot;ל.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>תודה תודה – מכתב תודה לפקיד או לפקידה, בחינם</title>
+  <meta name="description" content="כתבו בשלוש דקות מכתב תודה והוקרה לפקיד או לפקידה שעזרו לכם – בביטוח לאומי, בקופת חולים, בעירייה או בכל משרד ממשלתי – ושלחו אותו לפניות הציבור. בחינם, לזכרה של שושנה כהנא ז״ל.">
+  <link rel="canonical" href="https://todotoda.azma.app/">
+  <meta name="theme-color" content="#faf7f2">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  <meta property="og:site_name" content="תודה תודה">
+  <meta property="og:url" content="https://todotoda.azma.app/">
+  <meta property="og:title" content="תלונות הם שומעים כל יום. הגיע הזמן לתודה.">
+  <meta property="og:description" content="פקיד או פקידה עשו לכם יום טוב? כתבו להם מכתב תודה לפניות הציבור – בשלוש דקות ובחינם.">
+  <meta property="og:image" content="https://todotoda.azma.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="תודה תודה – תלונות הם שומעים כל יום. הגיע הזמן לתודה.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/assistant-hebrew.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✉️</text></svg>">
 </head>
 <body>
   <a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 
   <header class="site-header">
     <div class="wrap">
-      <p class="brand">תודה תודה</p>
+      <a class="brand" href="#main"><img src="favicon.svg" alt="" width="28" height="28"> תודה תודה</a>
       <nav aria-label="ניווט ראשי">
         <a href="#write">כתיבת מכתב</a>
         <a href="#shoshana">על שושנה</a>
-        <a href="#how">איך זה עובד</a>
+        <a href="#how" class="nav-extra">איך זה עובד</a>
       </nav>
     </div>
   </header>
@@ -28,55 +41,84 @@
   <main id="main">
     <section class="hero">
       <div class="wrap">
-        <p class="memorial-line">לזכרה של שושנה כהנא ז"ל</p>
+        <p class="memorial-line">לזכרה של שושנה כהנא ז״ל</p>
         <h1>תלונות הם שומעים כל יום.<br>הגיע הזמן לתודה.</h1>
-        <p class="lead">קיבלתם שירות טוב מפקיד או מפקידה? כתבו להם מכתב תודה בשלוש דקות, והמכתב יגיע לממונים ולמשרד שבו הם עובדים.</p>
+        <p class="lead">קיבלתם שירות טוב מפקיד או מפקידה? תוך שלוש דקות יהיה לכם מכתב הוקרה מנוסח, לשליחה לפניות הציבור, כדי שהמילה הטובה תגיע לממונים ותירשם בתיק האישי.</p>
         <a class="btn btn-primary btn-lg" href="#write">כתיבת מכתב תודה</a>
+        <p class="hero-note">בחינם · בלי הרשמה · שום פרט לא נשמר</p>
       </div>
     </section>
 
     <section id="write" class="wrap section" aria-labelledby="write-title">
-      <h2 id="write-title">כתיבת מכתב תודה</h2>
+      <h2 id="write-title">כתיבת מכתב תודה לפקיד או לפקידה</h2>
 
       <ol class="steps" aria-label="שלבי הכתיבה">
-        <li data-step="1" class="active"><span>1</span> למי מודים</li>
+        <li data-step="1" class="active" aria-current="step"><span>1</span> למי מודים</li>
         <li data-step="2"><span>2</span> מה קרה</li>
         <li data-step="3"><span>3</span> הפרטים שלכם</li>
         <li data-step="4"><span>4</span> המכתב מוכן</li>
       </ol>
-      <p class="sr-only" aria-live="polite" id="step-announcer"></p>
+      <p class="step-caption" id="step-caption" aria-live="polite">שלב 1 מתוך 4 · למי מודים</p>
 
       <form id="letter-form" novalidate>
+        <p class="hint req-note">שדות המסומנים ב-<span class="req">*</span> הם חובה.</p>
+
         <!-- שלב 1 -->
         <fieldset class="step-panel" data-panel="1">
-          <legend>למי אתם רוצים להודות?</legend>
+          <legend tabindex="-1">למי אתם רוצים להודות?</legend>
 
           <label for="office">משרד או ארגון <span class="req" aria-hidden="true">*</span></label>
-          <select id="office" name="office" required></select>
+          <select id="office" name="office" required aria-describedby="office-err"></select>
+          <p class="field-error" id="office-err" hidden>נא לבחור משרד או ארגון</p>
 
           <div id="office-name-wrap" hidden>
             <label for="officeName">שם הארגון <span class="req" aria-hidden="true">*</span></label>
-            <input id="officeName" name="officeName" type="text" placeholder="לדוגמה: עיריית חולון">
+            <input id="officeName" name="officeName" type="text" placeholder="לדוגמה: עיריית חולון" aria-describedby="officeName-err">
+            <p class="field-error" id="officeName-err" hidden>נא לכתוב את שם הארגון</p>
           </div>
+
+          <span class="label" id="clerkGender-label">פקיד או פקידה? <span class="req" aria-hidden="true">*</span></span>
+          <p class="hint">כדי לנסח את המכתב בלשון הנכונה.</p>
+          <div class="choice-row" role="radiogroup" aria-labelledby="clerkGender-label" aria-describedby="clerkGender-err" id="clerkGender-group">
+            <label class="chip"><input type="radio" name="clerkGender" value="f"> <span>פקידה</span></label>
+            <label class="chip"><input type="radio" name="clerkGender" value="m"> <span>פקיד</span></label>
+          </div>
+          <p class="field-error" id="clerkGender-err" hidden>נא לבחור פקיד או פקידה</p>
+
+          <label for="clerkName">שם הפקיד/ה <span class="req" aria-hidden="true">*</span></label>
+          <input id="clerkName" name="clerkName" type="text" placeholder="לדוגמה: רונית לוי" autocomplete="off" aria-describedby="clerkName-err clerkName-hint">
+          <p class="hint" id="clerkName-hint">גם שם פרטי מספיק.</p>
+          <p class="field-error" id="clerkName-err" hidden>נא לכתוב את שם הפקיד/ה, או לסמן שהשם לא ידוע</p>
+          <label class="check">
+            <input type="checkbox" id="noName" name="noName">
+            <span>השם לא ידוע לי (נעזור לזהות לפי מקום, תאריך ושעה)</span>
+          </label>
 
           <label for="branch">סניף, מחלקה או לשכה</label>
           <input id="branch" name="branch" type="text" placeholder="לדוגמה: סניף באר שבע">
 
-          <label for="clerkName">שם הפקיד/ה <span class="req" aria-hidden="true">*</span></label>
-          <input id="clerkName" name="clerkName" type="text" required placeholder="לדוגמה: רונית לוי" autocomplete="off">
-          <p class="hint">לא זוכרים את השם המלא? גם שם פרטי מספיק. אפשר לציין פרטים מזהים, למשל מספר עמדה.</p>
-
-          <span class="label" id="clerkGender-label">הפנייה אל הפקיד/ה</span>
-          <div class="choice-row" role="radiogroup" aria-labelledby="clerkGender-label">
-            <label class="chip"><input type="radio" name="clerkGender" value="f" checked> פקידה</label>
-            <label class="chip"><input type="radio" name="clerkGender" value="m"> פקיד</label>
-          </div>
-
-          <label for="role">תפקיד (לא חובה)</label>
-          <input id="role" name="role" type="text" placeholder="לדוגמה: פקידת קבלת קהל">
-
-          <label for="serviceDate">מתי קיבלתם את השירות?</label>
+          <label for="serviceDate">תאריך השירות</label>
           <input id="serviceDate" name="serviceDate" type="date">
+
+          <details class="more">
+            <summary>פרטים נוספים שיעזרו לזהות את העובד/ת (לא חובה)</summary>
+            <label for="role">תפקיד</label>
+            <input id="role" name="role" type="text" placeholder="לדוגמה: פקידת קבלת קהל">
+
+            <label for="station">מספר עמדה, חדר או דלפק</label>
+            <input id="station" name="station" type="text" placeholder="לדוגמה: עמדה 4">
+
+            <label for="serviceTime">שעה משוערת</label>
+            <input id="serviceTime" name="serviceTime" type="time">
+
+            <span class="label" id="channel-label">איך קיבלתם את השירות?</span>
+            <div class="choice-row" role="radiogroup" aria-labelledby="channel-label">
+              <label class="chip"><input type="radio" name="channel" value="front"> <span>פנים אל פנים</span></label>
+              <label class="chip"><input type="radio" name="channel" value="phone"> <span>בטלפון</span></label>
+              <label class="chip"><input type="radio" name="channel" value="chat"> <span>בצ'אט</span></label>
+              <label class="chip"><input type="radio" name="channel" value="email"> <span>במייל</span></label>
+            </div>
+          </details>
 
           <div class="nav-row">
             <button type="button" class="btn btn-primary" data-next>המשך</button>
@@ -85,24 +127,25 @@
 
         <!-- שלב 2 -->
         <fieldset class="step-panel" data-panel="2" hidden>
-          <legend>מה קרה?</legend>
+          <legend tabindex="-1">מה קרה?</legend>
 
           <label for="topic">באיזה נושא קיבלתם עזרה?</label>
-          <input id="topic" name="topic" type="text" placeholder="לדוגמה: הסדרת קצבת זקנה לאמי">
+          <input id="topic" name="topic" type="text" placeholder="לדוגמה: הגשת בקשה לקצבה">
 
           <span class="label" id="qualities-label">מה בלט בשירות? (אפשר לבחור כמה)</span>
           <div class="choice-grid" role="group" aria-labelledby="qualities-label" id="qualities"></div>
 
-          <label for="story">ספרו במילים שלכם מה קרה (לא חובה, אבל זה עושה את כל ההבדל)</label>
-          <textarea id="story" name="story" rows="4" placeholder="לדוגמה: הגעתי מבולבלת ולחוצה, והיא ישבה איתי חצי שעה, הסבירה כל טופס והתקשרה בעצמה לבדוק שהכול הסתדר."></textarea>
+          <label for="story">ספרו במילים שלכם מה קרה</label>
+          <textarea id="story" name="story" rows="4" placeholder="לדוגמה: הגעתי לחוץ ומבולבל, וקיבלו אותי בסבלנות. הסבירו לי כל טופס ובדקו שהכול הסתדר." aria-describedby="story-hint"></textarea>
+          <p class="hint" id="story-hint">זה מה שהופך את המכתב לאישי. כדאי לשבח את היחס וההסבר, בלי פרטים רפואיים או אישיים, בלי השוואה לעובדים אחרים, ובלי לציין ויתור על נהלים.</p>
 
-          <label for="impact">מה זה עשה לכם? (לא חובה)</label>
+          <label for="impact">איך זה השפיע עליכם?</label>
           <input id="impact" name="impact" type="text" placeholder="לדוגמה: יצאתי משם עם תחושת הקלה גדולה">
 
           <span class="label" id="tone-label">סגנון המכתב</span>
           <div class="choice-row" role="radiogroup" aria-labelledby="tone-label">
-            <label class="chip"><input type="radio" name="tone" value="formal" checked> רשמי ומפורט</label>
-            <label class="chip"><input type="radio" name="tone" value="short"> קצר וחם</label>
+            <label class="chip"><input type="radio" name="tone" value="formal" checked> <span>רשמי ומפורט</span></label>
+            <label class="chip"><input type="radio" name="tone" value="short"> <span>קצר וחם</span></label>
           </div>
 
           <div class="nav-row">
@@ -113,21 +156,22 @@
 
         <!-- שלב 3 -->
         <fieldset class="step-panel" data-panel="3" hidden>
-          <legend>הפרטים שלכם</legend>
-          <p class="hint">מכתב חתום בשם מלא מקבל משקל רב יותר אצל הממונים. הפרטים לא נשמרים באתר ולא נשלחים לשום מקום מלבד המכתב עצמו.</p>
+          <legend tabindex="-1">הפרטים שלכם</legend>
+          <p class="hint">מכתב חתום בשם מלא מקבל משקל רב יותר. הפרטים מופיעים רק במכתב עצמו: הם לא נשמרים באתר ולא נשלחים לשום מקום.</p>
 
           <label for="writerName">השם שלכם <span class="req" aria-hidden="true">*</span></label>
-          <input id="writerName" name="writerName" type="text" required autocomplete="name">
+          <input id="writerName" name="writerName" type="text" autocomplete="name" aria-describedby="writerName-err">
+          <p class="field-error" id="writerName-err" hidden>נא לכתוב את שמכם</p>
 
-          <label for="city">עיר מגורים (לא חובה)</label>
+          <label for="city">עיר מגורים</label>
           <input id="city" name="city" type="text" autocomplete="address-level2">
 
-          <label for="contact">טלפון או מייל לחזרה (לא חובה)</label>
+          <label for="contact">טלפון או מייל ליצירת קשר</label>
           <input id="contact" name="contact" type="text" dir="auto">
 
           <label class="check">
             <input type="checkbox" name="dedication" id="dedication" checked>
-            להוסיף בסוף המכתב שורת הקדשה לזכרה של שושנה כהנא ז"ל
+            <span>להוסיף בסוף המכתב שורה קצרה לזכרה של שושנה כהנא ז״ל</span>
           </label>
 
           <div class="nav-row">
@@ -138,81 +182,125 @@
 
         <!-- שלב 4 -->
         <fieldset class="step-panel" data-panel="4" hidden>
-          <legend>המכתב מוכן</legend>
-          <p class="hint">אפשר לערוך את המכתב חופשי לפני השליחה.</p>
+          <legend tabindex="-1">המכתב מוכן!</legend>
+          <p class="ready-lead">נשאר רק לשלוח. <a href="#send" class="jump">לדרכי השליחה ↓</a></p>
 
           <label for="subject">נושא</label>
           <input id="subject" name="subject" type="text">
 
-          <label for="letter">גוף המכתב</label>
-          <textarea id="letter" name="letter" rows="18" class="letter-text"></textarea>
+          <label for="letter">המכתב (אפשר לערוך כרצונכם)</label>
+          <textarea id="letter" name="letter" rows="14" class="letter-text" aria-describedby="letter-count"></textarea>
+          <p class="hint" id="letter-count" aria-live="polite"></p>
 
-          <h3 class="send-title">איך שולחים?</h3>
-          <div class="send-options">
-            <div class="send-card">
-              <h4>1. דרך טופס פניות הציבור (מומלץ)</h4>
-              <p>רוב משרדי הממשלה מקבלים פניות דרך טופס באתר. מעתיקים את המכתב ומדביקים אותו בטופס. רצוי לבחור בטופס נושא כמו "מחמאה", "הוקרה" או "משוב".</p>
+          <div id="send" class="send">
+            <h3>איך שולחים?</h3>
+            <p class="tip" id="form-tip" hidden></p>
+
+            <div class="send-card primary" id="card-form">
+              <h4>שליחה בטופס פניות הציבור <span class="rec">(מומלץ)</span></h4>
+              <ol class="mini-steps">
+                <li>לוחצים על הכפתור: המכתב מועתק והטופס נפתח.</li>
+                <li>ממלאים את הפרטים שהטופס מבקש. זה רגיל שמבקשים תעודת זהות וטלפון.</li>
+                <li>בשדה התוכן לוחצים לחיצה ארוכה ובוחרים "הדבק". אם יש בחירת נושא, בוחרים "מחמאה", "תודה" או "משוב".</li>
+              </ol>
               <div class="btn-row">
-                <button type="button" class="btn btn-primary" id="copy-btn">העתקת המכתב</button>
-                <a class="btn btn-ghost" id="form-link" target="_blank" rel="noopener">לטופס פניות הציבור</a>
-                <a class="btn btn-ghost" id="office-link" target="_blank" rel="noopener">לאתר הארגון</a>
-                <a class="btn btn-ghost" id="search-link" target="_blank" rel="noopener">חיפוש "פניות הציבור"</a>
+                <a class="btn btn-primary" id="copy-open" target="_blank" rel="noopener">העתקה ומעבר לטופס<span class="sr-only"> (נפתח בחלון חדש)</span></a>
               </div>
             </div>
-            <div class="send-card">
-              <h4>2. במייל</h4>
-              <label for="toEmail">כתובת המייל של הנמען (אם ידועה)</label>
+
+            <div class="send-card" id="card-email">
+              <h4>שליחה במייל <span class="rec">(מומלץ)</span></h4>
+              <label for="toEmail">כתובת המייל של הנמען</label>
               <input id="toEmail" name="toEmail" type="email" dir="ltr" placeholder="pniot@example.gov.il">
+              <p class="hint" id="email-hint"></p>
               <div class="btn-row">
-                <a class="btn btn-primary" id="mail-btn" href="#">פתיחת מייל מוכן לשליחה</a>
+                <a class="btn btn-ghost" id="mail-btn" href="#">פתיחת מייל מוכן לשליחה</a>
               </div>
             </div>
-            <div class="send-card">
-              <h4>3. מכתב מודפס</h4>
-              <p>אפשר להדפיס, לחתום ולמסור ביד בסניף או לשלוח בדואר. בחלון ההדפסה אפשר גם לשמור כקובץ PDF.</p>
+
+            <div class="send-card" id="card-print">
+              <h4>מכתב מודפס, ביד או בדואר</h4>
+              <p>הדרך הבטוחה ביותר שהמכתב יגיע: להדפיס, לחתום ולמסור למנהל/ת הסניף או לפקיד/ה עצמו. בחלון ההדפסה אפשר גם לשמור כקובץ PDF.</p>
               <p class="postal" id="postal" hidden></p>
               <div class="btn-row">
                 <button type="button" class="btn btn-ghost" id="print-btn">הדפסה / שמירה כ-PDF</button>
               </div>
             </div>
+
+            <div class="other-links">
+              <button type="button" class="link-btn" id="copy-btn">העתקת המכתב בלבד</button>
+              <a id="office-link" target="_blank" rel="noopener">לאתר הארגון<span class="sr-only"> (נפתח בחלון חדש)</span></a>
+              <a id="search-link" target="_blank" rel="noopener">חיפוש "פניות הציבור" בגוגל<span class="sr-only"> (נפתח בחלון חדש)</span></a>
+            </div>
+            <p class="source-note" id="source-note" hidden></p>
           </div>
-          <p class="source-note" id="source-note" hidden></p>
-          <p class="toast" id="toast" role="status" aria-live="polite"></p>
 
           <div class="nav-row">
             <button type="button" class="btn btn-ghost" data-prev>חזרה לעריכה</button>
-            <button type="button" class="btn btn-ghost" id="restart-btn">מכתב חדש</button>
+            <button type="button" class="btn btn-primary" id="sent-btn">שלחתי ✓</button>
           </div>
         </fieldset>
+
+        <!-- סיום -->
+        <section class="step-panel done-panel" data-panel="5" hidden aria-labelledby="done-title">
+          <h3 id="done-title" tabindex="-1">תודה! 💛</h3>
+          <p>עוד "תודה" יצאה לדרך, לזכרה של שושנה.</p>
+          <p class="hint">כדאי לשמור את מספר הפנייה, אם קיבלתם. אם לא תגיע תשובה תוך כחודש, אפשר לפנות שוב לפניות הציבור ולשאול אם המכתב הועבר.</p>
+          <p><strong>מכירים עוד מישהו שקיבל שירות טוב?</strong> ספרו לו על האתר:</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" id="wa-share" target="_blank" rel="noopener">שיתוף בוואטסאפ<span class="sr-only"> (נפתח בחלון חדש)</span></a>
+            <button type="button" class="btn btn-ghost" id="native-share" hidden>שיתוף…</button>
+            <button type="button" class="btn btn-ghost" id="restart-btn">כתיבת מכתב נוסף</button>
+          </div>
+        </section>
       </form>
     </section>
 
     <section id="shoshana" class="section memorial" aria-labelledby="shoshana-title">
       <div class="wrap narrow">
-        <h2 id="shoshana-title">על שושנה כהנא ז"ל</h2>
-        <p>שושנה כהנא ז"ל הקפידה, בכל פעם שקיבלה שירות טוב, לשלוח מכתב תודה והערכה, כדי שהמילה הטובה תגיע גם אל מי שנתן את השירות וגם אל הממונים עליו.</p>
+        <h2 id="shoshana-title">על שושנה כהנא ז״ל</h2>
+        <p>שושנה הקפידה, בכל פעם שקיבלה שירות טוב, לשלוח מכתב תודה והערכה, כדי שהמילה הטובה תגיע גם אל מי שנתן את השירות וגם אל הממונים עליו.</p>
         <p>פקידים ונותני שירות שומעים לא מעט תלונות, ומכתב תודה אחד יכול לשנות למישהו את היום.</p>
-        <p>האתר הזה הוקם לזכרה, כדי שכל אחד יוכל להמשיך את המנהג שלה בקלות. כל מכתב שנשלח מכאן הוא עוד "תודה" בשמה.</p>
-        <p class="blessing">יהי זכרה ברוך.</p>
+        <p>האתר הזה הוקם לזכרה, כדי שכולנו נוכל להמשיך את המנהג שלה בקלות. כל מכתב שנכתב כאן ממשיך את דרכה.</p>
+        <p class="blessing">יהי זכרה ברוך</p>
       </div>
     </section>
 
     <section id="how" class="wrap section" aria-labelledby="how-title">
       <h2 id="how-title">איך זה עובד</h2>
-      <div class="how-grid">
-        <div><strong>ממלאים</strong><p>למי מודים, מה קרה ומה בלט בשירות. כמה שורות מספיקות.</p></div>
-        <div><strong>מקבלים מכתב</strong><p>האתר מנסח מכתב הוקרה מכובד בעברית, ואפשר לערוך אותו.</p></div>
-        <div><strong>שולחים</strong><p>בטופס פניות הציבור, במייל או בדואר. מבקשים שהמכתב יועבר לממונים ויתויק בתיק האישי.</p></div>
-      </div>
-      <p class="privacy">🔒 פרטיות: האתר פועל כולו בדפדפן שלכם. שום פרט לא נשמר ולא נשלח לשרת כלשהו.</p>
+      <ol class="how-grid">
+        <li><strong>ממלאים</strong><p>למי מודים, מה קרה ומה בלט בשירות. כמה שורות מספיקות.</p></li>
+        <li><strong>מקבלים מכתב</strong><p>האתר מנסח מכתב הוקרה מכובד בעברית, ואפשר לערוך אותו.</p></li>
+        <li><strong>שולחים בעצמכם</strong><p>בטופס פניות הציבור, במייל או ביד, עם בקשה להעביר לממונים ולתייק בתיק האישי.</p></li>
+      </ol>
+    </section>
+
+    <section id="privacy" class="wrap section legal" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">פרטיות ותנאי שימוש</h2>
+      <p>המכתב נוצר כולו בדפדפן שלכם. מה שתמלאו (השם שלכם, פרטי הקשר ושם הפקיד/ה) לא נשמר באתר ולא מגיע אלינו או לאף גורם אחר, אלא רק לגוף שאליו תבחרו לשלוח את המכתב. את השליחה אתם עושים בעצמכם. באתר אין עוגיות, אין כלי מעקב ואין סטטיסטיקות. כמו בכל אתר, חברת האחסון (GitHub) מקבלת נתונים טכניים כמו כתובת IP כדי להציג לכם את הדף.</p>
+      <p>השימוש באתר חינם וניתן כמות שהוא. מי שכותב את המכתב ושולח אותו אחראי לתוכנו ולנכונותו. פרטי הקשר של הגופים נלקחו מפרסומים רשמיים ועשויים להשתנות, ולכן כדאי לוודא אותם באתר הגוף. אין התחייבות שהמכתב יועבר לממונים או שתתקבל עליו תשובה.</p>
+    </section>
+
+    <section id="accessibility" class="wrap section legal" aria-labelledby="a11y-title">
+      <h2 id="a11y-title">הצהרת נגישות</h2>
+      <p>האתר נבנה בהתאם לתקן הישראלי ת״י 5568 (WCAG 2.0 ברמה AA): הוא ניתן לתפעול מלא במקלדת, מותאם לקוראי מסך ולהגדלת טקסט, ומתאים לטלפון ולמצב כהה. האתר נבדק בכלים אוטומטיים ובדפדפנים נפוצים. אם נתקלתם בבעיית נגישות, נשמח שתספרו לנו <a href="https://github.com/AzMaVeZe/TODOTODA/issues/new" target="_blank" rel="noopener">בטופס הפנייה<span class="sr-only"> (נפתח בחלון חדש)</span></a>, ונטפל בה בהקדם.</p>
+      <p class="hint">עודכן: אוקטובר 2026.</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>תודה תודה · מיזם התנדבותי ללא מטרות רווח, לזכרה של שושנה כהנא ז"ל</p>
+      <p><strong>תודה תודה</strong> הוא מיזם התנדבותי פרטי, ללא תשלום וללא מטרות רווח, לזכרה של שושנה כהנא ז״ל.</p>
+      <p>האתר אינו של מדינת ישראל או של אף אחד מהגופים שמופיעים בו, ואינו קשור אליהם. האתר לא שולח את המכתב: אתם שולחים אותו בעצמכם.</p>
+      <p class="footer-links">
+        <a href="#privacy">פרטיות ותנאי שימוש</a> ·
+        <a href="#accessibility">הצהרת נגישות</a> ·
+        <a href="https://github.com/AzMaVeZe/TODOTODA/issues/new" target="_blank" rel="noopener">יצירת קשר ודיווח על פרטים שגויים<span class="sr-only"> (נפתח בחלון חדש)</span></a>
+      </p>
     </div>
   </footer>
+
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
 
   <!-- תצוגת הדפסה -->
   <div id="print-area" aria-hidden="true"></div>

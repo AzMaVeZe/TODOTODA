@@ -28,6 +28,8 @@
 | `js/offices.js` | רשימת המשרדים והקישורים (כאן מוסיפים משרדים וכתובות מייל) |
 | `js/letter.js` | ניסוח המכתב |
 | `js/app.js` | הפעלת הטופס ואפשרויות השליחה |
+| `fonts/` | הגופנים Assistant ו-Frank Ruhl Libre (רישיון SIL OFL), מאוחסנים באתר |
+| `favicon.svg`, `apple-touch-icon.png`, `og-image.png` | סמל האתר ותמונת השיתוף |
 
 ## מאגר פניות הציבור
 
