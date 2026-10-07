@@ -1,7 +1,6 @@
 // ניהול הטופס: מעבר בין שלבים, בניית המכתב ואפשרויות השליחה.
 (function () {
-  // כתובת השיתוף כוללת ?s=1 כדי שוואטסאפ ייצור תצוגה מקדימה עדכנית (הוא שומר במטמון לפי כתובת)
-  var SITE_URL = "https://todotoda.azma.app/?s=1";
+  var SITE_URL = "https://todotoda.azma.app/";
   var MAILTO_SAFE_LENGTH = 1900; // מעבר לזה תוכנות מייל במחשב עלולות לקטוע את המכתב
 
   var form = document.getElementById("letter-form");
@@ -362,25 +361,40 @@
     window.print();
   });
 
-  // --- סיום ושיתוף ---
-  var shareText = "כתבתי מכתב תודה לפקיד/ה שעזר/ה לי 🙏\nתלונות הם שומעים כל יום – הגיע הזמן לתודה.\nתעשו תודה גם אתם, זה לוקח 3 דקות ובחינם:";
-  document.getElementById("wa-share").href =
-    "https://wa.me/?text=" + encodeURIComponent(shareText + "\n" + SITE_URL);
-  var nativeShare = document.getElementById("native-share");
-  if (navigator.share) {
-    nativeShare.hidden = false;
-    nativeShare.addEventListener("click", function () {
-      navigator.share({ title: "תודה תודה", text: shareText, url: SITE_URL }).catch(function () {});
+  // --- שיתוף (וואטסאפ, פייסבוק, לינקדאין ושיתוף מובנה בטלפון) ---
+  // ?ref=... מראה ב-GoatCounter מאיזה ערוץ הגיעו המבקרים, וגם מבטיח לוואטסאפ תצוגה מקדימה עדכנית
+  var SHARE_TEXT = {
+    done: "כתבתי מכתב תודה לפקיד/ה שעזר/ה לי 🙏\nתלונות הם שומעים כל יום – הגיע הזמן לתודה.\nתעשו תודה גם אתם, זה לוקח 3 דקות ובחינם:",
+    site: "תלונות הם שומעים כל יום – הגיע הזמן לתודה 🙏\nאתר חינמי לכתיבת מכתב תודה לפקיד או לפקידה שעזרו לכם, לזכרה של שוש כהנא ז״ל:"
+  };
+
+  function shareLink(source) { return SITE_URL + "?ref=" + source; }
+
+  document.querySelectorAll(".share-row").forEach(function (row) {
+    var text = SHARE_TEXT[row.dataset.context] || SHARE_TEXT.site;
+    row.querySelectorAll("[data-share]").forEach(function (el) {
+      var net = el.dataset.share;
+      if (net === "whatsapp") el.href = "https://wa.me/?text=" + encodeURIComponent(text + "\n" + shareLink("whatsapp"));
+      if (net === "facebook") el.href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareLink("facebook"));
+      if (net === "linkedin") el.href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(shareLink("linkedin"));
+      if (net === "native") {
+        if (!navigator.share) return;
+        el.hidden = false;
+        el.addEventListener("click", function () {
+          navigator.share({ title: "תודה תודה", text: text, url: shareLink("share") }).catch(function () {});
+        });
+      }
+      el.addEventListener("click", function () {
+        window.track("share-" + net, "שיתוף: " + net + " (" + row.dataset.context + ")");
+      });
     });
-  }
+  });
 
   document.getElementById("sent-btn").addEventListener("click", function () {
     window.track("sent", "שלחתי ✓");
     go(5);
   });
-  document.getElementById("wa-share").addEventListener("click", function () {
-    window.track("share-whatsapp", "שיתוף בוואטסאפ");
-  });
+
 
   document.getElementById("restart-btn").addEventListener("click", function () {
     form.reset();

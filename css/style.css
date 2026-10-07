@@ -303,3 +303,19 @@ textarea { resize: vertical; }
 .contact-status.ok { color: var(--primary); }
 .contact-status.fail { color: var(--error); }
 button:disabled { opacity: .6; cursor: wait; }
+
+/* --- שיתוף --- */
+.share-title { font-weight: 700; margin: 16px 0 8px; }
+.share-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.share-btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px;
+  border-radius: 10px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+  color: #fff; border: 0;
+}
+.share-btn.whatsapp { background: #1a7f4b; }
+.share-btn.facebook { background: #1464d2; }
+.share-btn.linkedin { background: #0a66c2; }
+.share-btn.native { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.share-btn:hover { filter: brightness(1.1); }
+.footer-share { margin: 0 0 16px; }
+.footer-share .share-title { font-size: 1rem; color: var(--text); }
