@@ -170,7 +170,10 @@
     });
     caption.textContent = step <= 4 ? "שלב " + step + " מתוך 4 · " + STEP_NAMES[step - 1] : "נשלח!";
     hideToast();
-    if (step === 4) prepareLetter();
+    if (step === 4) {
+      prepareLetter();
+      countReady();
+    }
     if (!fromHistory) history.pushState({ step: step }, "");
     document.getElementById("write-title").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     var heading = panels[step - 1].querySelector("legend, h3");
@@ -216,6 +219,16 @@
   toEmail.addEventListener("input", function () { toEmail.dataset.userEdited = "1"; });
   letterEl.addEventListener("input", function () { letterEl.dataset.edited = "1"; });
   subjectEl.addEventListener("input", function () { letterEl.dataset.edited = "1"; });
+
+  // ספירה: מכתב מוכן נספר פעם אחת לכל מכתב (ולא בכל חזרה לשלב 4), יחד עם המשרד מהרשימה
+  var countedKey = "";
+  function countReady() {
+    if (lastBuilt === countedKey) return;
+    countedKey = lastBuilt;
+    var o = officeById[val("office")];
+    window.track("letter-ready", "מכתב הוכן");
+    if (o) window.track("office/" + o.id, "מכתב: " + o.name);
+  }
 
   function prepareLetter() {
     var d = data();
@@ -317,9 +330,13 @@
   }
 
   document.getElementById("copy-btn").addEventListener("click", copyLetter);
-  copyOpen.addEventListener("click", copyLetter); // הקישור עצמו פותח את הטופס בחלון חדש
+  copyOpen.addEventListener("click", function () { // הקישור עצמו פותח את הטופס בחלון חדש
+    copyLetter();
+    window.track("send-form", "שליחה בטופס");
+  });
 
   mailBtn.addEventListener("click", function () {
+    window.track("send-email", "שליחה במייל");
     if (mailBtn.href.length > MAILTO_SAFE_LENGTH) {
       copyLetter();
       showToast("המכתב גם הועתק. אם הוא לא הופיע במלואו במייל, מחקו והדביקו אותו.");
@@ -339,6 +356,7 @@
   }
   window.addEventListener("beforeprint", fillPrintArea);
   document.getElementById("print-btn").addEventListener("click", function () {
+    window.track("send-print", "הדפסה");
     fillPrintArea();
     window.print();
   });
@@ -355,7 +373,13 @@
     });
   }
 
-  document.getElementById("sent-btn").addEventListener("click", function () { go(5); });
+  document.getElementById("sent-btn").addEventListener("click", function () {
+    window.track("sent", "שלחתי ✓");
+    go(5);
+  });
+  document.getElementById("wa-share").addEventListener("click", function () {
+    window.track("share-whatsapp", "שיתוף בוואטסאפ");
+  });
 
   document.getElementById("restart-btn").addEventListener("click", function () {
     form.reset();
