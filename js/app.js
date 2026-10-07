@@ -1,6 +1,7 @@
 // ניהול הטופס: מעבר בין שלבים, בניית המכתב ואפשרויות השליחה.
 (function () {
-  var SITE_URL = "https://todotoda.azma.app/";
+  // כתובת השיתוף כוללת ?s=1 כדי שוואטסאפ ייצור תצוגה מקדימה עדכנית (הוא שומר במטמון לפי כתובת)
+  var SITE_URL = "https://todotoda.azma.app/?s=1";
   var MAILTO_SAFE_LENGTH = 1900; // מעבר לזה תוכנות מייל במחשב עלולות לקטוע את המכתב
 
   var form = document.getElementById("letter-form");
