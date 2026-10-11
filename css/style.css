@@ -319,3 +319,12 @@ button:disabled { opacity: .6; cursor: wait; }
 .share-btn:hover { filter: brightness(1.1); }
 .footer-share { margin: 0 0 16px; }
 .footer-share .share-title { font-size: 1rem; color: var(--text); }
+
+/* שאלות נפוצות */
+.faq { display: grid; gap: 10px; }
+.faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px 16px; }
+.faq-item summary { cursor: pointer; font-weight: 700; color: var(--primary); min-height: 44px; display: flex; align-items: center; }
+.faq-item p { margin: 0 0 14px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::before { content: "+"; display: inline-grid; place-items: center; width: 24px; flex: none; margin-inline-end: 8px; font-size: 1.3rem; color: var(--accent); }
+.faq-item[open] summary::before { content: "−"; }
