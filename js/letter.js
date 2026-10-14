@@ -62,15 +62,18 @@
   // איך פונים לפקיד/ה: בפעם הראשונה (toFirst כולל ל'), ובהמשך המכתב
   function names(d, f) {
     var full = d.clerkName.trim().replace(/\s+/g, " ");
+    // בבית חולים פונים ל"איש/אשת הצוות" (אחות, רופא, מזכירה), ובשאר המקומות ל"פקיד/ה"
+    var title = d.medical ? g(f, "איש הצוות", "אשת הצוות") : g(f, "פקיד", "פקידה");
     if (!full) {
-      var who = g(f, "הפקיד", "הפקידה");
-      var desc = who + " " + g(f, "שקיבל", "שקיבלה") + " אותי";
-      return { first: desc, toFirst: "ל" + desc.slice(1), later: who, known: false };
+      var who = "ה" + title;
+      if (d.medical) who = g(f, "איש הצוות", "אשת הצוות");
+      var desc = who + " " + (d.medical ? g(f, "שטיפל בי", "שטיפלה בי") : g(f, "שקיבל", "שקיבלה") + " אותי");
+      return { first: desc, toFirst: "ל" + (d.medical ? desc : desc.slice(1)), later: who, known: false };
     }
     var parts = full.split(" ");
     if (parts.length === 1) {
       // שם פרטי בלבד: "לפקידה רונית", בלי "גב'"
-      return { first: g(f, "הפקיד", "הפקידה") + " " + full, toFirst: g(f, "לפקיד", "לפקידה") + " " + full, later: full, known: true };
+      return { first: (d.medical ? "" : "ה") + title + " " + full, toFirst: "ל" + title + " " + full, later: full, known: true };
     }
     var honor = g(f, "מר", "גב'");
     return { first: honor + " " + full, toFirst: "ל" + honor + " " + full, later: honor + " " + parts[parts.length - 1], known: true };
@@ -99,7 +102,8 @@
     var phrases = chosen.filter(function (q) { return q.phrase; }).map(function (q) { return q.phrase; });
     var extra = d.qualities.indexOf("extra") !== -1;
     var how = phrases.length ? joinHe(phrases) : "במסירות ובמקצועיות";
-    var channel = CHANNELS[d.channel] || "";
+    // "בקבלת הקהל" לא מתאים לבית חולים; שם מספיק לא לציין את הערוץ
+    var channel = (d.medical && d.channel === "front") ? "" : (CHANNELS[d.channel] || "");
 
     // "גב' רונית לוי, פקידת קבלת קהל (סניף באר שבע, עמדה 4)"
     var who = n.toFirst;

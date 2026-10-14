@@ -68,7 +68,7 @@
      "name": "לאן שולחים מכתב תודה לביטוח לאומי, לקופת חולים או למשרד ממשלתי?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "מכתבי תודה נשלחים ליחידת פניות הציבור של הגוף שנתן את השירות. באתר יש מאגר מוכן של דרכי פנייה ליותר מ־25 גופים, ביניהם ביטוח לאומי, רשות המסים, רשות האוכלוסין, משרד הרישוי, קופות החולים, דואר ישראל, רכבת ישראל, חברת החשמל ומגן דוד אדום. בוחרים את הגוף, ומקבלים קישור לטופס המקוון, כתובת מייל או כתובת למשלוח בדואר."
+      "text": "מכתבי תודה נשלחים ליחידת פניות הציבור של הגוף שנתן את השירות. באתר יש מאגר מוכן של דרכי פנייה ליותר מ־50 גופים, ביניהם ביטוח לאומי, רשות המסים, רשות האוכלוסין, משרד הרישוי, קופות החולים, דואר ישראל, רכבת ישראל, חברת החשמל, מגן דוד אדום ובתי החולים הגדולים. בוחרים את הגוף, ומקבלים קישור לטופס המקוון, כתובת מייל או כתובת למשלוח בדואר."
      }
     },
     {
@@ -100,7 +100,7 @@
      "name": "אפשר להודות גם לאחות, לנהג, לשוטר או לעובד בעירייה?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "כן. אפשר לבחור עירייה או מועצה מקומית, משטרה, קופת חולים, מגן דוד אדום ועוד, ואם הגוף לא מופיע ברשימה בוחרים \"ארגון אחר\" וכותבים את שמו."
+      "text": "כן. אפשר לבחור בית חולים, עירייה או מועצה מקומית, משטרה, קופת חולים, מגן דוד אדום ועוד, ואם הגוף לא מופיע ברשימה בוחרים \"ארגון אחר\" וכותבים את שמו."
      }
     }
    ]
@@ -163,15 +163,15 @@
             <p class="field-error" id="officeName-err" hidden>נא לכתוב את שם הארגון</p>
           </div>
 
-          <span class="label" id="clerkGender-label">פקיד או פקידה? <span class="req" aria-hidden="true">*</span></span>
+          <span class="label" id="clerkGender-label"><span data-t="gq">פקיד או פקידה?</span> <span class="req" aria-hidden="true">*</span></span>
           <p class="hint">כדי לנסח את המכתב בלשון הנכונה.</p>
           <div class="choice-row" role="radiogroup" aria-labelledby="clerkGender-label" aria-describedby="clerkGender-err" id="clerkGender-group">
-            <label class="chip"><input type="radio" name="clerkGender" value="f"> <span>פקידה</span></label>
-            <label class="chip"><input type="radio" name="clerkGender" value="m"> <span>פקיד</span></label>
+            <label class="chip"><input type="radio" name="clerkGender" value="f"> <span data-t="f">פקידה</span></label>
+            <label class="chip"><input type="radio" name="clerkGender" value="m"> <span data-t="m">פקיד</span></label>
           </div>
           <p class="field-error" id="clerkGender-err" hidden>נא לבחור פקיד או פקידה</p>
 
-          <label for="clerkName">שם הפקיד/ה <span class="req" aria-hidden="true">*</span></label>
+          <label for="clerkName"><span data-t="nm">שם הפקיד/ה</span> <span class="req" aria-hidden="true">*</span></label>
           <input id="clerkName" name="clerkName" type="text" placeholder="לדוגמה: רונית לוי" autocomplete="off" aria-describedby="clerkName-err clerkName-hint">
           <p class="hint" id="clerkName-hint">גם שם פרטי מספיק.</p>
           <p class="field-error" id="clerkName-err" hidden>נא לכתוב את שם הפקיד/ה, או לסמן שהשם לא ידוע</p>
@@ -189,7 +189,7 @@
           <details class="more">
             <summary>פרטים נוספים שיעזרו לזהות את העובד/ת (לא חובה)</summary>
             <label for="role">תפקיד</label>
-            <input id="role" name="role" type="text" placeholder="לדוגמה: פקידת קבלת קהל">
+            <input id="role" name="role" type="text" placeholder="לדוגמה: פקידת קבלת קהל" data-ph-clerk="לדוגמה: פקידת קבלת קהל" data-ph-medical="לדוגמה: אחות במחלקה פנימית">
 
             <label for="station">מספר עמדה, חדר או דלפק</label>
             <input id="station" name="station" type="text" placeholder="לדוגמה: עמדה 4">
@@ -370,11 +370,11 @@
       <h2 id="faq-title">שאלות נפוצות</h2>
       <div class="faq">
         <details class="faq-item"><summary>איך כותבים מכתב תודה לפקיד או לפקידה?</summary><p>ממלאים כאן כמה פרטים: איפה קיבלתם את השירות, מי עזר לכם, מה קרה ומה בלט בשירות. האתר מנסח מכתב הוקרה מכובד בעברית, עם פנייה לפניות הציבור ובקשה להעביר את המכתב לממונים ולתייק אותו בתיק האישי של העובד. אפשר לערוך את המכתב לפני השליחה.</p></details>
-        <details class="faq-item"><summary>לאן שולחים מכתב תודה לביטוח לאומי, לקופת חולים או למשרד ממשלתי?</summary><p>מכתבי תודה נשלחים ליחידת פניות הציבור של הגוף שנתן את השירות. באתר יש מאגר מוכן של דרכי פנייה ליותר מ־25 גופים, ביניהם ביטוח לאומי, רשות המסים, רשות האוכלוסין, משרד הרישוי, קופות החולים, דואר ישראל, רכבת ישראל, חברת החשמל ומגן דוד אדום. בוחרים את הגוף, ומקבלים קישור לטופס המקוון, כתובת מייל או כתובת למשלוח בדואר.</p></details>
+        <details class="faq-item"><summary>לאן שולחים מכתב תודה לביטוח לאומי, לקופת חולים או למשרד ממשלתי?</summary><p>מכתבי תודה נשלחים ליחידת פניות הציבור של הגוף שנתן את השירות. באתר יש מאגר מוכן של דרכי פנייה ליותר מ־50 גופים, ביניהם ביטוח לאומי, רשות המסים, רשות האוכלוסין, משרד הרישוי, קופות החולים, דואר ישראל, רכבת ישראל, חברת החשמל, מגן דוד אדום ובתי החולים הגדולים. בוחרים את הגוף, ומקבלים קישור לטופס המקוון, כתובת מייל או כתובת למשלוח בדואר.</p></details>
         <details class="faq-item"><summary>האם מכתב תודה באמת מגיע לעובד ולממונים?</summary><p>יחידות פניות הציבור מטפלות גם במחמאות, לא רק בתלונות. המכתב מבקש במפורש להעביר את התודה לעובד, לממונה הישיר ולמנהל היחידה, ולתייק אותה בתיק האישי, וכדאי לציין בו שם, סניף ותאריך כדי שיהיה קל לזהות את העובד.</p></details>
         <details class="faq-item"><summary>כמה זה עולה? צריך להירשם?</summary><p>האתר חינמי לגמרי, בלי הרשמה ובלי פרסומות. הוא הוקם לזכרה של שוש כהנא ז״ל, שהקפידה לשלוח מכתב תודה על כל שירות טוב שקיבלה.</p></details>
         <details class="faq-item"><summary>מה קורה עם הפרטים שאני ממלא?</summary><p>המכתב נכתב בתוך הדפדפן שלכם, והפרטים לא נשמרים ולא נשלחים אלינו. את המכתב אתם שולחים בעצמכם לגוף שבחרתם.</p></details>
-        <details class="faq-item"><summary>אפשר להודות גם לאחות, לנהג, לשוטר או לעובד בעירייה?</summary><p>כן. אפשר לבחור עירייה או מועצה מקומית, משטרה, קופת חולים, מגן דוד אדום ועוד, ואם הגוף לא מופיע ברשימה בוחרים "ארגון אחר" וכותבים את שמו.</p></details>
+        <details class="faq-item"><summary>אפשר להודות גם לאחות, לנהג, לשוטר או לעובד בעירייה?</summary><p>כן. אפשר לבחור בית חולים, עירייה או מועצה מקומית, משטרה, קופת חולים, מגן דוד אדום ועוד, ואם הגוף לא מופיע ברשימה בוחרים "ארגון אחר" וכותבים את שמו.</p></details>
       </div>
     </section>
 
