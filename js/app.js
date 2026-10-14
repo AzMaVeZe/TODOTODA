@@ -159,8 +159,18 @@
   // --- מעבר בין שלבים (כולל כפתור "חזרה" של הדפדפן) ---
   var STEP_NAMES = ["למי מודים", "מה קרה", "הפרטים שלכם", "המכתב מוכן"];
 
+  // ספירה של כל שלב באשף (פעם אחת לכל טעינת דף), כדי לראות איפה אנשים עוזבים. בלי שום מידע אישי.
+  var stepsCounted = {};
+  function countStep(name, title) {
+    if (stepsCounted[name]) return;
+    stepsCounted[name] = true;
+    window.track(name, title);
+  }
+  form.addEventListener("focusin", function () { countStep("step/1-start", "שלב 1: התחילו למלא"); });
+
   function go(step, fromHistory) {
     current = step;
+    if (step === 2 || step === 3) countStep("step/" + step, "שלב " + step + ": " + STEP_NAMES[step - 1]);
     panels.forEach(function (p) { p.hidden = Number(p.dataset.panel) !== step; });
     stepItems.forEach(function (li) {
       var n = Number(li.dataset.step);
