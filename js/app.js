@@ -29,6 +29,7 @@
     var og = document.createElement("optgroup");
     og.label = group.group;
     group.items.forEach(function (o) {
+      if (group.medical) o.medical = true;
       officeById[o.id] = o;
       var opt = document.createElement("option");
       opt.value = o.id;
@@ -42,9 +43,18 @@
   var preset = new URLSearchParams(location.search).get("office");
   if (preset && officeById[preset]) officeSel.value = preset;
 
+  // בבית חולים: "איש/אשת צוות" במקום "פקיד/ה"
+  var TERMS = {
+    clerk: { gq: "פקיד או פקידה?", f: "פקידה", m: "פקיד", nm: "שם הפקיד/ה" },
+    medical: { gq: "איש או אשת צוות?", f: "אשת צוות", m: "איש צוות", nm: "שם איש/אשת הצוות" }
+  };
   function syncOfficeName() {
     var o = officeById[officeSel.value];
     officeNameWrap.hidden = !(o && o.askName);
+    var kind = o && o.medical ? "medical" : "clerk";
+    form.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = TERMS[kind][el.dataset.t]; });
+    var role = document.getElementById("role");
+    role.placeholder = role.dataset[kind === "medical" ? "phMedical" : "phClerk"];
   }
   officeSel.addEventListener("change", syncOfficeName);
   syncOfficeName();
@@ -91,6 +101,7 @@
       office: o,
       officeName: o ? (o.askName ? val("officeName") : o.name) : "",
       officeFromList: !!(o && !o.askName),
+      medical: !!(o && o.medical),
       clerkName: noName.checked ? "" : val("clerkName"),
       clerkGender: checked("clerkGender"),
       branch: val("branch"),
@@ -159,8 +170,18 @@
   // --- מעבר בין שלבים (כולל כפתור "חזרה" של הדפדפן) ---
   var STEP_NAMES = ["למי מודים", "מה קרה", "הפרטים שלכם", "המכתב מוכן"];
 
+  // ספירה של כל שלב באשף (פעם אחת לכל טעינת דף), כדי לראות איפה אנשים עוזבים. בלי שום מידע אישי.
+  var stepsCounted = {};
+  function countStep(name, title) {
+    if (stepsCounted[name]) return;
+    stepsCounted[name] = true;
+    window.track(name, title);
+  }
+  form.addEventListener("focusin", function () { countStep("step/1-start", "שלב 1: התחילו למלא"); });
+
   function go(step, fromHistory) {
     current = step;
+    if (step === 2 || step === 3) countStep("step/" + step, "שלב " + step + ": " + STEP_NAMES[step - 1]);
     panels.forEach(function (p) { p.hidden = Number(p.dataset.panel) !== step; });
     stepItems.forEach(function (li) {
       var n = Number(li.dataset.step);
