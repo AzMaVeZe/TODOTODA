@@ -332,3 +332,9 @@ button:disabled { opacity: .6; cursor: wait; }
 /* תזכורת לשמור את האתר במסך הסיום */
 .save-tip { background: var(--accent-soft); border-radius: var(--radius); padding: 12px 16px; margin: 20px 0 0; }
 .save-tip a { font-weight: 700; }
+
+/* דפים בשפות אחרות: גופנים שתומכים בערבית וברוסית, וכל שורה במכתב בכיוון של השפה שלה */
+html[lang="ar"] { --font: "Assistant", "Noto Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif; --font-letter: "Frank Ruhl Libre", "Noto Naskh Arabic", "Times New Roman", serif; }
+html[lang="ru"] { --font: "Assistant", "Segoe UI", Roboto, Arial, sans-serif; --font-letter: "Frank Ruhl Libre", Georgia, "Times New Roman", serif; }
+html[lang="ru"] #letter, html[lang="ru"] .print-letter { unicode-bidi: plaintext; text-align: start; }
+.lang-switch { font-weight: 700; }

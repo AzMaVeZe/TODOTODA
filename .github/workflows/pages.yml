@@ -22,12 +22,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      # בניית דפי השפות (/ar/, /ru/) מתוך הדף העברי והתרגומים בתיקיית i18n
+      - name: Build language pages
+        run: node tools/build-i18n.js
       # מספר גרסה בקישורים לקבצים, כדי שדפדפנים יטענו את הגרסה החדשה אחרי עדכון
       - name: Cache-bust assets
         run: |
           v="${GITHUB_SHA::7}"
-          sed -i -E "s#(css/style\.css|js/[a-z]+\.js)\"#\1?v=$v\"#g" index.html
-          grep -c "?v=$v" index.html
+          for f in index.html */index.html; do
+            sed -i -E "s#(css/style\.css|js/[a-z0-9-]+\.js)\"#\1?v=$v\"#g" "$f"
+            echo "$f: $(grep -c "?v=$v" "$f")"
+          done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
