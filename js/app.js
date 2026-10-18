@@ -1,6 +1,11 @@
 // ניהול הטופס: מעבר בין שלבים, בניית המכתב ואפשרויות השליחה.
 (function () {
-  var SITE_URL = "https://todotoda.azma.app/";
+  // כתובת הדף הנוכחי (בעברית או בשפה אחרת), לקישורי שיתוף
+  var canonical = document.querySelector('link[rel="canonical"]');
+  var SITE_URL = canonical ? canonical.href : "https://todotoda.azma.app/";
+  // בדפים בשפות אחרות: שמות הגופים בשפת הדף, ומכתב נוסף בשפת הכותב אחרי המכתב העברי
+  var LANG = document.documentElement.lang || "he";
+  var L10N = window.OFFICE_I18N || null;
   var MAILTO_SAFE_LENGTH = 1900; // מעבר לזה תוכנות מייל במחשב עלולות לקטוע את המכתב
 
   var form = document.getElementById("letter-form");
@@ -27,13 +32,13 @@
   officeSel.appendChild(placeholder);
   window.OFFICES.forEach(function (group) {
     var og = document.createElement("optgroup");
-    og.label = group.group;
+    og.label = (L10N && L10N.groups[group.group]) || group.group;
     group.items.forEach(function (o) {
       if (group.medical) o.medical = true;
       officeById[o.id] = o;
       var opt = document.createElement("option");
       opt.value = o.id;
-      opt.textContent = o.name;
+      opt.textContent = (L10N && L10N.names[o.id]) || o.name;
       og.appendChild(opt);
     });
     officeSel.appendChild(og);
@@ -79,7 +84,7 @@
     input.name = "qualities";
     input.value = q.id;
     var span = document.createElement("span");
-    span.textContent = q.label;
+    span.textContent = (window.LetterLocal && window.LetterLocal.qualityLabels[q.id]) || q.label;
     label.append(input, " ", span);
     qWrap.appendChild(label);
   });
@@ -214,6 +219,16 @@
     }
   });
 
+  // בדפים בשפות אחרות: קישור לתרגום הטקסט החופשי לעברית
+  var translateHint = document.getElementById("translate-hint");
+  if (window.LetterLocal && translateHint) {
+    translateHint.hidden = false;
+    document.getElementById("translate-link").addEventListener("click", function () {
+      var text = [val("topic"), val("story"), val("impact")].filter(Boolean).join("\n\n");
+      this.href = "https://translate.google.com/?sl=" + LANG + "&tl=iw&op=translate&text=" + encodeURIComponent(text);
+    });
+  }
+
   // --- הכנת המכתב ואפשרויות השליחה ---
   var subjectEl = document.getElementById("subject");
   var letterEl = document.getElementById("letter");
@@ -248,6 +263,7 @@
     countedKey = lastBuilt;
     var o = officeById[val("office")];
     window.track("letter-ready", "מכתב הוכן");
+    if (LANG !== "he") window.track("letter-ready/" + LANG, "מכתב הוכן (" + LANG + ")");
     if (o) window.track("office/" + o.id, "מכתב: " + o.name);
   }
 
@@ -259,6 +275,10 @@
         confirm("שיניתם פרטים בטופס. לבנות את המכתב מחדש? (העריכות שעשיתם במכתב יימחקו)");
       if (rebuild) {
         var result = window.Letter.build(d);
+        if (window.LetterLocal) {
+          var local = window.LetterLocal.build(d, d.office && L10N ? L10N.names[d.office.id] : "");
+          result.body += "\n\n――――――――\n" + window.LetterLocal.noteHe + "\n\n" + local.body;
+        }
         subjectEl.value = result.subject;
         letterEl.value = result.body;
         delete letterEl.dataset.edited;
@@ -275,7 +295,7 @@
     searchLink.href = "https://www.google.com/search?q=" +
       encodeURIComponent(d.officeName + " פניות הציבור");
 
-    formTip.textContent = o.formTip || (o.askName
+    formTip.textContent = (L10N && L10N.tips[o.id]) || o.formTip || (o.askName
       ? "חפשו \"פניות הציבור\" באתר הארגון, או התקשרו למוקד ובקשו כתובת מייל. אפשר גם למסור מכתב מודפס."
       : "");
     formTip.hidden = !formTip.textContent;
