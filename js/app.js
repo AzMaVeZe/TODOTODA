@@ -276,7 +276,7 @@
       if (rebuild) {
         var result = window.Letter.build(d);
         if (window.LetterLocal) {
-          var local = window.LetterLocal.build(d, d.office && L10N ? L10N.names[d.office.id] : "");
+          var local = window.LetterLocal.build(d, d.office && !d.office.askName && L10N ? L10N.names[d.office.id] : "");
           result.body += "\n\n――――――――\n" + window.LetterLocal.noteHe + "\n\n" + local.body;
         }
         subjectEl.value = result.subject;
