@@ -188,6 +188,8 @@
     current = step;
     if (step === 2 || step === 3) countStep("step/" + step, "שלב " + step + ": " + STEP_NAMES[step - 1]);
     panels.forEach(function (p) { p.hidden = Number(p.dataset.panel) !== step; });
+    var reqNote = form.querySelector(".req-note");
+    if (reqNote) reqNote.hidden = step >= 4;
     stepItems.forEach(function (li) {
       var n = Number(li.dataset.step);
       li.classList.toggle("active", n === step);
@@ -238,6 +240,10 @@
   var emailHint = document.getElementById("email-hint");
   var cardForm = document.getElementById("card-form");
   var cardEmail = document.getElementById("card-email");
+  var cardPrint = document.getElementById("card-print");
+  var sendPrimary = document.getElementById("send-primary");
+  var sendMore = document.getElementById("send-more");
+  var moreWays = document.getElementById("more-ways");
   var copyOpen = document.getElementById("copy-open");
   var formTip = document.getElementById("form-tip");
   var officeLink = document.getElementById("office-link");
@@ -304,13 +310,20 @@
       (o.askName ? "" : "לגוף זה לא פורסמה כתובת מייל לפניות הציבור. עדיף לשלוח בטופס או במכתב מודפס.");
     // הדרך המומלצת: טופס, אלא אם לגוף אין טופס או שעדיף אצלו מייל
     var emailFirst = !!(o.email && (!o.form || o.preferEmail));
-    mailBtn.classList.toggle("btn-primary", emailFirst);
-    mailBtn.classList.toggle("btn-ghost", !emailFirst);
-    cardEmail.classList.toggle("primary", emailFirst);
-    cardForm.classList.toggle("primary", !emailFirst);
-    cardEmail.querySelector(".rec").hidden = !emailFirst;
-    cardForm.querySelector(".rec").hidden = emailFirst;
-    if (emailFirst) cardForm.before(cardEmail); else cardEmail.before(cardForm);
+    // דרך מומלצת אחת גלויה, והשאר מקופלות תחת «דרכים נוספות»
+    var primary = o.askName ? cardEmail : emailFirst ? cardEmail : o.form ? cardForm : o.email ? cardEmail : cardPrint;
+    cardEmail.hidden = !o.email && !o.askName; // בלי כתובת מייל רשמית אין טעם בכרטיס ריק
+    [cardForm, cardEmail, cardPrint].forEach(function (card) {
+      var isPrimary = card === primary;
+      card.classList.toggle("primary", isPrimary);
+      var rec = card.querySelector(".rec");
+      if (rec) rec.hidden = !isPrimary;
+      if (isPrimary) sendPrimary.appendChild(card); else sendMore.appendChild(card);
+    });
+    mailBtn.classList.toggle("btn-primary", primary === cardEmail);
+    mailBtn.classList.toggle("btn-ghost", primary !== cardEmail);
+    var hasMore = [cardForm, cardEmail, cardPrint].some(function (c) { return c !== primary && !c.hidden; });
+    moreWays.hidden = !hasMore;
 
     if (o.postal) {
       postalEl.textContent = "כתובת למשלוח בדואר: " + o.postal;
@@ -374,10 +387,45 @@
   copyOpen.addEventListener("click", function () { // הקישור עצמו פותח את הטופס בחלון חדש
     copyLetter();
     window.track("send-form", "שליחה בטופס");
+    awaitReturn();
+  });
+
+  // מי שיצא לטופס, למייל או להדפסה וחזר לאתר: "חזרתם? איך הלך?"
+  var backCheck = document.getElementById("back-check");
+  var awaiting = false;
+  function awaitReturn() { awaiting = true; }
+  function showBackCheck() {
+    if (!awaiting || current !== 4) return;
+    awaiting = false;
+    backCheck.hidden = false;
+    backCheck.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) showBackCheck(); });
+  window.addEventListener("focus", showBackCheck);
+  window.addEventListener("afterprint", function () { setTimeout(showBackCheck, 300); });
+  document.getElementById("back-sent").addEventListener("click", markSent);
+  document.getElementById("back-stuck").addEventListener("click", function () {
+    window.track("stuck", "נתקעתי");
+    backCheck.hidden = true;
+    moreWays.hidden = false;
+    moreWays.open = true;
+    moreWays.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  });
+
+  // שמירת המכתב מחוץ לאתר: בוואטסאפ לעצמי, או לבן משפחה שיעזור לשלוח
+  document.getElementById("save-letter-btn").addEventListener("click", function () {
+    window.track("save-letter", "המכתב נשמר / נשלח לבן משפחה");
+    var text = subjectEl.value + "\n\n" + letterEl.value;
+    if (navigator.share) {
+      navigator.share({ text: text }).catch(function () {});
+    } else {
+      window.open("https://wa.me/?text=" + encodeURIComponent(safe(text)), "_blank", "noopener");
+    }
   });
 
   mailBtn.addEventListener("click", function () {
     window.track("send-email", "שליחה במייל");
+    awaitReturn();
     if (mailBtn.href.length > MAILTO_SAFE_LENGTH) {
       copyLetter();
       showToast("המכתב גם הועתק. אם הוא לא הופיע במלואו במייל, מחקו והדביקו אותו.");
@@ -398,6 +446,7 @@
   window.addEventListener("beforeprint", fillPrintArea);
   document.getElementById("print-btn").addEventListener("click", function () {
     window.track("send-print", "הדפסה");
+    awaitReturn();
     fillPrintArea();
     window.print();
   });
@@ -405,8 +454,8 @@
   // --- שיתוף (וואטסאפ, פייסבוק, לינקדאין ושיתוף מובנה בטלפון) ---
   // ?ref=... מראה ב-GoatCounter מאיזה ערוץ הגיעו המבקרים, וגם מבטיח לוואטסאפ תצוגה מקדימה עדכנית
   var SHARE_TEXT = {
-    done: "כתבתי מכתב תודה לפקיד/ה שעזר/ה לי 🙏\nתלונות הם שומעים כל יום – הגיע הזמן לתודה.\nתעשו תודה גם אתם, זה לוקח 3 דקות ובחינם:",
-    site: "תלונות הם שומעים כל יום – הגיע הזמן לתודה 🙏\nאתר חינמי לכתיבת מכתב תודה לפקיד או לפקידה שעזרו לכם, לזכרה של שוש כהנא ז״ל:"
+    done: "שלחתי עכשיו מכתב תודה למי שעזר לי 💛\nדרך אתר שהוקם לזכרה של שוש כהנא ז״ל, שהקפידה להודות בכתב על כל שירות טוב.\nתלונות הם שומעים כל יום. הגיע הזמן לתודה.\nמישהו עזר לכם לאחרונה? 3 דקות, בחינם:",
+    site: "תלונות הם שומעים כל יום. הגיע הזמן לתודה 🙏\nפקידה, אחות או נציג עזרו לכם? כאן כותבים להם מכתב תודה בשלוש דקות, בחינם. לזכרה של שוש כהנא ז״ל:"
   };
 
   function shareLink(source) { return SITE_URL + "?ref=" + source; }
@@ -431,10 +480,63 @@
     });
   });
 
-  document.getElementById("sent-btn").addEventListener("click", function () {
+  function markSent() {
     window.track("sent", "שלחתי ✓");
+    backCheck.hidden = true;
+    awaiting = false;
     go(5);
+  }
+  document.getElementById("sent-btn").addEventListener("click", markSent);
+
+  // --- "אין לי עכשיו למי להודות": שמירה לפעם הבאה ---
+  var notNow = document.getElementById("not-now");
+  notNow.addEventListener("toggle", function () { if (notNow.open) window.track("not-now", "אין לי עכשיו למי להודות"); });
+  document.getElementById("nn-wa").href = "https://wa.me/?text=" + encodeURIComponent(
+    "לשמור לפעם הבאה: כשמישהו יעזור לי, לכתוב לו מכתב תודה 💛\n" + shareLink("self"));
+  document.getElementById("nn-wa").addEventListener("click", function () { window.track("not-now/wa", "לא עכשיו: קישור לעצמי"); });
+  document.getElementById("nn-example").addEventListener("click", function () {
+    window.track("not-now/example", "לא עכשיו: דוגמה למכתב");
+    document.getElementById("example").open = true;
   });
+
+  // תזכורת ביומן בעוד חודש: קישור ליומן גוגל, ובאייפון קובץ יומן שנוצר בדפדפן (בלי שרת)
+  var REMINDERS = {
+    later: { title: "תודה תודה: למי אני רוצה להודות החודש?", details: "מישהו נתן לכם שירות טוב? כתבו לו מכתב תודה בשלוש דקות: " + SITE_URL },
+    check: { title: "תודה תודה: לבדוק אם מכתב התודה הועבר", details: "אם לא הגיעה תשובה מפניות הציבור, אפשר לפנות שוב ולשאול אם המכתב הועבר לעובד/ת ולממונים. " + SITE_URL }
+  };
+  function ymd(date) { return date.toISOString().slice(0, 10).replace(/-/g, ""); }
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  document.querySelectorAll(".reminder-link").forEach(function (link) {
+    var r = REMINDERS[link.dataset.reminder];
+    var day = new Date(Date.now() + 30 * 864e5);
+    var next = new Date(day.getTime() + 864e5);
+    if (isIOS) {
+      var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//todotoda//he", "BEGIN:VEVENT",
+        "UID:" + Date.now() + "@todotoda.azma.app", "DTSTAMP:" + ymd(new Date()) + "T000000Z",
+        "DTSTART;VALUE=DATE:" + ymd(day), "DTEND;VALUE=DATE:" + ymd(next),
+        "SUMMARY:" + r.title, "DESCRIPTION:" + r.details, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+      link.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+      link.download = "todotoda-reminder.ics";
+      link.removeAttribute("target");
+    } else {
+      link.href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent(r.title) + "&details=" + encodeURIComponent(r.details) +
+        "&dates=" + ymd(day) + "/" + ymd(next);
+    }
+    link.addEventListener("click", function () { window.track("reminder/" + link.dataset.reminder, "תזכורת ביומן"); });
+  });
+
+  // דוגמה למכתב ב"איך זה עובד", נבנית מאותו מחולל שבונה את המכתבים האמיתיים
+  var example = document.getElementById("example-letter");
+  if (example) {
+    example.textContent = window.Letter.build({
+      officeName: "המוסד לביטוח לאומי", officeFromList: true, medical: false,
+      clerkName: "רונית לוי", clerkGender: "f", branch: "סניף באר שבע", station: "", role: "",
+      serviceDate: "", serviceTime: "", channel: "front", topic: "הגשת בקשה לקצבת זקנה",
+      qualities: ["patience", "clarity"], story: "הגעתי לחוץ ומבולבל. רונית ישבה איתי, עברה איתי על כל טופס ולא שחררה עד שהכול הסתדר.",
+      impact: "יצאתי משם עם תחושת הקלה גדולה.", tone: "formal", writerName: "ישראל ישראלי", city: "", contact: "", dedication: true
+    }).body;
+  }
 
 
   document.getElementById("restart-btn").addEventListener("click", function () {

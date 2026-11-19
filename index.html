@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="תודה תודה">
   <meta property="og:url" content="https://todotoda.azma.app/">
   <meta property="og:title" content="תלונות הם שומעים כל יום. הגיע הזמן לתודה.">
-  <meta property="og:description" content="פקיד או פקידה עשו לכם יום טוב? כתבו להם מכתב תודה לפניות הציבור – בשלוש דקות ובחינם.">
+  <meta property="og:description" content="פקידה, אחות או נציג עשו לכם יום טוב? כתבו להם מכתב תודה שיגיע לממונים. שלוש דקות, בחינם, לזכרה של שוש כהנא ז״ל.">
   <meta property="og:image" content="https://todotoda.azma.app/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -127,11 +127,22 @@
   <main id="main">
     <section class="hero">
       <div class="wrap">
-        <p class="memorial-line">לזכרה של שוש כהנא ז״ל</p>
-        <h1>תלונות הם שומעים כל יום.<br>הגיע הזמן לתודה.</h1>
-        <p class="lead">קיבלתם שירות טוב מפקיד או מפקידה? תוך שלוש דקות יהיה לכם מכתב הוקרה מנוסח, לשליחה לפניות הציבור, כדי שהמילה הטובה תגיע לממונים ותירשם בתיק האישי.</p>
+        <p class="memorial-line"><a href="#shoshana">לזכרה של שוש כהנא ז״ל, שהודתה בכתב על כל שירות טוב</a></p>
+        <h1>תלונות הם שומעים כל יום.<br><span class="h1-accent">הגיע הזמן לתודה.</span></h1>
+        <p class="lead">פקידה, אחות או נציג בטלפון עזרו לכם באמת? בשלוש דקות תקבלו מכתב תודה מנוסח, שמבקש להעביר את המילה הטובה לממונים ולתיק האישי.</p>
         <a class="btn btn-primary btn-lg" href="#write">תעשו תודה ←</a>
         <p class="hero-note">בחינם · בלי הרשמה · שום פרט לא נשמר</p>
+        <details class="not-now" id="not-now">
+          <summary>אין לי עכשיו למי להודות</summary>
+          <div class="not-now-body">
+            <p>זה בסדר גמור. שירות טוב מגיע בדרך כלל כשלא מצפים לו. אפשר לשמור את האתר לפעם הבאה:</p>
+            <div class="not-now-actions">
+              <a class="btn btn-ghost" id="nn-wa" href="https://wa.me/" target="_blank" rel="noopener">שליחת הקישור לעצמי בוואטסאפ<span class="sr-only"> (נפתח בחלון חדש)</span></a>
+              <a class="btn btn-ghost reminder-link" id="nn-cal" data-reminder="later" href="#" target="_blank" rel="noopener">תזכורת ביומן בעוד חודש</a>
+              <a class="btn btn-ghost" id="nn-example" href="#example">איך נראה מכתב?</a>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -174,16 +185,16 @@
           <label for="clerkName"><span data-t="nm">שם הפקיד/ה</span> <span class="req" aria-hidden="true">*</span></label>
           <input id="clerkName" name="clerkName" type="text" placeholder="לדוגמה: רונית לוי" autocomplete="off" aria-describedby="clerkName-err clerkName-hint">
           <p class="hint" id="clerkName-hint">גם שם פרטי מספיק.</p>
-          <p class="field-error" id="clerkName-err" hidden>נא לכתוב את שם הפקיד/ה, או לסמן שהשם לא ידוע</p>
+          <p class="field-error" id="clerkName-err" hidden>נא לכתוב שם (גם שם פרטי מספיק), או לסמן שאין לכם את השם</p>
           <label class="check">
             <input type="checkbox" id="noName" name="noName">
-            <span>השם לא ידוע לי (נעזור לזהות לפי מקום, תאריך ושעה)</span>
+            <span>אין לי את השם. סניף, תאריך ושעה יעזרו לזהות.</span>
           </label>
 
-          <label for="branch">סניף, מחלקה או לשכה</label>
+          <label for="branch">סניף, מחלקה או לשכה <span class="opt">(לא חובה)</span></label>
           <input id="branch" name="branch" type="text" placeholder="לדוגמה: סניף באר שבע">
 
-          <label for="serviceDate">תאריך השירות</label>
+          <label for="serviceDate">תאריך השירות <span class="opt">(לא חובה)</span></label>
           <input id="serviceDate" name="serviceDate" type="date">
 
           <details class="more">
@@ -221,9 +232,9 @@
           <span class="label" id="qualities-label">מה בלט בשירות? (אפשר לבחור כמה)</span>
           <div class="choice-grid" role="group" aria-labelledby="qualities-label" id="qualities"></div>
 
-          <label for="story">ספרו במילים שלכם מה קרה</label>
-          <textarea id="story" name="story" rows="4" placeholder="לדוגמה: הגעתי לחוץ ומבולבל, וקיבלו אותי בסבלנות. הסבירו לי כל טופס ובדקו שהכול הסתדר." aria-describedby="story-hint"></textarea>
-          <p class="hint" id="story-hint">זה מה שהופך את המכתב לאישי. כדאי לשבח את היחס וההסבר, בלי פרטים רפואיים או אישיים, בלי השוואה לעובדים אחרים, ובלי לציין ויתור על נהלים.</p>
+          <label for="story">ספרו במשפט או שניים מה קרה</label>
+          <textarea id="story" name="story" rows="4" placeholder="לדוגמה: הגעתי לחוץ ומבולבל. רונית ישבה איתי, עברה איתי על כל טופס ולא שחררה עד שהכול הסתדר." aria-describedby="story-hint"></textarea>
+          <p class="hint" id="story-hint">זה החלק שהכי נוגע ללב. כדאי להימנע מפרטים אישיים או רפואיים רגישים, מהשוואה לעובדים אחרים, ומלכתוב שעקפו בשבילכם נוהל: זה עלול להזיק להם.</p>
           <p class="hint" id="translate-hint" hidden>אפשר לכתוב בשפה שלכם. במכתב העברי המילים יופיעו כפי שכתבתם, ואפשר גם לתרגם אותן לעברית ולהדביק כאן. <a id="translate-link" href="https://translate.google.com/" target="_blank" rel="noopener">תרגום לעברית ב-Google Translate<span class="sr-only"> (נפתח בחלון חדש)</span></a></p>
 
           <label for="impact">איך זה השפיע עליכם?</label>
@@ -278,10 +289,22 @@
           <label for="letter">המכתב (אפשר לערוך כרצונכם)</label>
           <textarea id="letter" name="letter" rows="14" class="letter-text" aria-describedby="letter-count"></textarea>
           <p class="hint" id="letter-count" aria-live="polite"></p>
+          <p class="save-letter-row"><button type="button" class="link-btn" id="save-letter-btn">שמירת המכתב בוואטסאפ, או שליחה לבן משפחה שיעזור לשלוח</button></p>
 
           <div id="send" class="send">
             <h3>איך שולחים?</h3>
+            <div class="back-check" id="back-check" hidden role="status">
+              <p><strong>חזרתם? איך הלך?</strong></p>
+              <div class="btn-row">
+                <button type="button" class="btn btn-primary" id="back-sent">שלחתי ✓</button>
+                <button type="button" class="btn btn-ghost" id="back-stuck">נתקעתי, תראו לי דרך אחרת</button>
+              </div>
+            </div>
             <p class="tip" id="form-tip" hidden></p>
+            <div id="send-primary"></div>
+            <details class="more-ways" id="more-ways">
+              <summary>דרכים נוספות לשלוח</summary>
+              <div id="send-more">
 
             <div class="send-card primary" id="card-form">
               <h4>שליחה בטופס פניות הציבור <span class="rec">(מומלץ)</span></h4>
@@ -314,6 +337,9 @@
               </div>
             </div>
 
+              </div>
+            </details>
+
             <div class="other-links">
               <button type="button" class="link-btn" id="copy-btn">העתקת המכתב בלבד</button>
               <a id="office-link" target="_blank" rel="noopener">לאתר הארגון<span class="sr-only"> (נפתח בחלון חדש)</span></a>
@@ -330,10 +356,10 @@
 
         <!-- סיום -->
         <section class="step-panel done-panel" data-panel="5" hidden aria-labelledby="done-title">
-          <h3 id="done-title" tabindex="-1">תודה! 💛</h3>
-          <p>עוד "תודה" יצאה לדרך, לזכרה של שוש.</p>
-          <p class="hint">כדאי לשמור את מספר הפנייה, אם קיבלתם. אם לא תגיע תשובה תוך כחודש, אפשר לפנות שוב לפניות הציבור ולשאול אם המכתב הועבר.</p>
-          <p><strong>מכירים עוד מישהו שקיבל שירות טוב?</strong> הזמינו אותו לעשות תודה:</p>
+          <h3 id="done-title" tabindex="-1">תודה! <svg class="heart-icon" aria-hidden="true" viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M12 21c-5.3-3.9-8-6.4-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 3-2.7 5.5-8 9.4z"/></svg></h3>
+          <p>עוד "תודה" יצאה לדרך. ככה ממשיכים את המנהג של שוש.</p>
+          <p class="hint">כדאי לשמור את מספר הפנייה, אם קיבלתם. אם לא תגיע תשובה תוך כחודש, אפשר לפנות שוב לפניות הציבור ולשאול אם המכתב הועבר. <a class="reminder-link" data-reminder="check" href="#" target="_blank" rel="noopener">תזכורת ביומן בעוד חודש</a></p>
+          <p><strong>לכל אחד יש מישהו שמגיעה לו תודה.</strong> שלחו את האתר לקבוצת המשפחה או לחברים:</p>
           <div class="share-row" data-context="done">
               <a class="share-btn whatsapp" data-share="whatsapp" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3z"/></svg><span>וואטסאפ</span><span class="sr-only"> (נפתח בחלון חדש)</span></a>
               <a class="share-btn facebook" data-share="facebook" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg><span>פייסבוק</span><span class="sr-only"> (נפתח בחלון חדש)</span></a>
@@ -365,6 +391,10 @@
         <li><strong>מקבלים מכתב</strong><p>האתר מנסח מכתב הוקרה מכובד בעברית, ואפשר לערוך אותו.</p></li>
         <li><strong>שולחים בעצמכם</strong><p>בטופס פניות הציבור, במייל או ביד, עם בקשה להעביר לממונים ולתייק בתיק האישי.</p></li>
       </ol>
+      <details class="example-letter" id="example">
+        <summary>דוגמה למכתב שהאתר כותב</summary>
+        <div class="letter-sample" id="example-letter"></div>
+      </details>
     </section>
 
     <section id="faq" class="wrap section" aria-labelledby="faq-title">
