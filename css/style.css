@@ -338,3 +338,46 @@ html[lang="ar"] { --font: "Assistant", "Noto Sans Arabic", "Segoe UI", Tahoma, A
 html[lang="ru"] { --font: "Assistant", "Segoe UI", Roboto, Arial, sans-serif; --font-letter: "Frank Ruhl Libre", Georgia, "Times New Roman", serif; }
 html[lang="ru"] #letter, html[lang="ru"] .print-letter { unicode-bidi: plaintext; text-align: start; }
 .lang-switch { font-weight: 700; }
+
+/* --- שיפורים בעקבות סקירת הקריאייטיב --- */
+.memorial-line a { color: inherit; text-decoration: none; }
+.memorial-line a:hover, .memorial-line a:focus-visible { text-decoration: underline; }
+.h1-accent { color: var(--primary); }
+h1, h2, .lead, .memorial p { text-wrap: pretty; }
+.opt { color: var(--muted); font-weight: 400; font-size: .95em; }
+
+/* "אין לי עכשיו למי להודות" */
+.not-now { margin: 18px auto 0; max-width: 560px; }
+.not-now summary { cursor: pointer; color: var(--primary); font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; text-decoration: underline; text-underline-offset: 3px; }
+.not-now-body { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-top: 8px; }
+.not-now-body p { margin: 0 0 10px; }
+.not-now-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+/* דוגמה למכתב */
+.example-letter { margin-top: 18px; }
+.example-letter summary { cursor: pointer; font-weight: 700; color: var(--primary); min-height: 44px; display: flex; align-items: center; }
+.letter-sample { white-space: pre-wrap; font-family: var(--font-letter); font-size: 1.05rem; line-height: 1.7; background: var(--paper); color: var(--paper-text); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+
+/* שלב השליחה */
+.save-letter-row { margin: 4px 0 18px; }
+.back-check { background: var(--accent-soft); border: 2px solid var(--accent); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px; }
+.back-check p { margin: 0 0 8px; }
+.more-ways { margin: 4px 0 14px; }
+.more-ways > summary { cursor: pointer; font-weight: 700; color: var(--primary); min-height: 44px; display: flex; align-items: center; }
+.more-ways[open] > summary { margin-bottom: 10px; }
+
+/* מסך הסיום: לב בצבע האתר, וואטסאפ הוא הכפתור הבולט */
+.heart-icon { color: var(--accent); vertical-align: -4px; }
+.done-panel .share-btn.facebook, .done-panel .share-btn.linkedin { background: transparent; color: var(--text); border: 1.5px solid var(--field-border); }
+.done-panel .share-btn.whatsapp { min-width: 220px; justify-content: center; }
+
+/* טלפון: יותר מקום למכתב, השלב הראשון מתחיל במסך הראשון */
+@media (max-width: 560px) {
+  .hero { padding: 40px 0 44px; }
+  #write-title { font-size: 1.375rem; }
+  .step-panel { padding: 20px 16px; }
+  .letter-text { padding: 22px 18px; }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero { background: #1c2622; }
+}

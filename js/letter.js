@@ -2,13 +2,13 @@
 (function () {
   // תכונות שאפשר לבחור, והביטוי שנכנס למכתב (בלי ו' פנימית, כדי שהרשימה תהיה קריאה)
   var QUALITIES = [
-    { id: "patience", label: "סבלנות", phrase: "בסבלנות רבה" },
-    { id: "kindness", label: "אדיבות", phrase: "באדיבות רבה" },
-    { id: "professional", label: "מקצועיות", phrase: "במקצועיות רבה" },
+    { id: "patience", label: "סבלנות", phrase: "בסבלנות" },
+    { id: "kindness", label: "אדיבות", phrase: "באדיבות" },
+    { id: "professional", label: "מקצועיות", phrase: "במקצועיות" },
     { id: "personal", label: "יחס אישי", phrase: "ביחס אישי וחם" },
     { id: "listening", label: "הקשבה", phrase: "בהקשבה אמיתית" },
     { id: "clarity", label: "הסבר ברור", phrase: "בהסברים ברורים" },
-    { id: "efficiency", label: "יעילות", phrase: "ביעילות רבה" },
+    { id: "efficiency", label: "יעילות", phrase: "ביעילות" },
     { id: "extra", label: "מעבר לנדרש" } // נכנס כמשפט נפרד
   ];
 
@@ -20,8 +20,8 @@
   };
 
   var DEDICATION =
-    "המכתב נשלח במסגרת \"תודה תודה\", לזכרה של שוש כהנא ז\"ל, " +
-    "שנהגה להודות בכתב על כל שירות טוב שקיבלה.";
+    "כתבתי את המכתב בעזרת \"תודה תודה\" (todotoda.azma.app), מיזם לזכרה של שוש כהנא ז\"ל, " +
+    "שהקפידה להודות בכתב על כל שירות טוב שקיבלה.";
 
   // בחירת צורת זכר/נקבה לפי מגדר הפקיד/ה
   function g(isF, m, f) { return isF ? f : m; }
@@ -67,13 +67,15 @@
     if (!full) {
       var who = "ה" + title;
       if (d.medical) who = g(f, "איש הצוות", "אשת הצוות");
-      var desc = who + " " + (d.medical ? g(f, "שטיפל בי", "שטיפלה בי") : g(f, "שקיבל", "שקיבלה") + " אותי");
+      var desc = who + " " + (d.medical ? g(f, "שטיפל בי", "שטיפלה בי") : g(f, "שעזר לי", "שעזרה לי"));
       return { first: desc, toFirst: "ל" + (d.medical ? desc : desc.slice(1)), later: who, known: false };
     }
     var parts = full.split(" ");
     if (parts.length === 1) {
       // שם פרטי בלבד: "לפקידה רונית", בלי "גב'"
-      return { first: (d.medical ? "" : "ה") + title + " " + full, toFirst: "ל" + title + " " + full, later: full, known: true };
+      // בבית חולים פונים בשם בלבד ("למירב"), ובשאר המקומות "לפקידה רונית"
+      if (d.medical) return { first: full, toFirst: pre("ל", full), later: full, known: true, bare: true };
+      return { first: "ה" + title + " " + full, toFirst: "ל" + title + " " + full, later: full, known: true };
     }
     var honor = g(f, "מר", "גב'");
     return { first: honor + " " + full, toFirst: "ל" + honor + " " + full, later: honor + " " + parts[parts.length - 1], known: true };
@@ -108,13 +110,19 @@
     // "גב' רונית לוי, פקידת קבלת קהל (סניף באר שבע, עמדה 4)"
     var who = n.toFirst;
     if (d.role.trim()) who += ", " + d.role.trim();
+    else if (n.bare) who += " מהצוות";
     var det = details(d);
     if (det) who += " (" + det + ")";
 
-    var subject = "מחמאה ומכתב הוקרה " + n.toFirst + (office ? " – " + office : "");
+    // בגוף המכתב בלי הסוגריים שבשם ("המרכז הרפואי שיבא (תל השומר)" ← "המרכז הרפואי שיבא")
+    var officeShort = office.replace(/\s*\([^)]*\)\s*$/, "");
+    var subject = "מחמאה ותודה " + n.toFirst + (office ? " – " + office : "");
     var her = g(f, "אליו", "אליה");
     var onHer = g(f, "עליו", "עליה");
     var fileLine = g(f, "בתיק האישי שלו", "בתיק האישי שלה");
+    var subj = n.known ? n.later : g(f, "הוא", "היא");
+    // בבית חולים "ליווה/ליוותה אותי", ובשאר המקומות "טיפל/טיפלה בפנייתי"
+    var handled = d.medical ? g(f, "ליווה אותי", "ליוותה אותי") : g(f, "טיפל בפנייתי", "טיפלה בפנייתי");
     var lines = [];
 
     lines.push("לכבוד");
@@ -126,10 +134,14 @@
     lines.push("שלום רב,");
     lines.push("");
 
+    // במכתב הקצר: ", ביום 10.11.2026 בשיחת טלפון" רק כשיש תאריך או ערוץ (בלי "לאחרונה")
+    var timing = [formatDate(d.serviceDate) ? when(d) : "", channel].filter(Boolean).join(" ");
+    timing = timing ? ", " + timing : "";
+
     if (d.tone === "short") {
       var short = [
-        "ברצוני לומר תודה גדולה " + who + ", " + g(f, "שטיפל", "שטיפלה") + " בפנייתי " +
-        when(d) + (channel ? " " + channel : "") + " " + how + "."
+        "ברצוני לומר תודה גדולה " + who + ".",
+        subj + " " + handled + " " + how + timing + "."
       ];
       if (d.topic.trim()) short.push("פניתי בנושא " + sentence(d.topic));
       if (extra) short.push(g(f, "הוא אף עשה", "היא אף עשתה") + " הרבה מעבר לנדרש.");
@@ -143,29 +155,28 @@
       );
     } else {
       lines.push(
-        "ברצוני להודות מקרב לב " + who + ", על השירות המצוין שקיבלתי " + when(d) +
+        "ברצוני להודות מקרב לב " + who + ", על " +
+        (d.medical ? "הטיפול המסור והיחס החם" : "השירות המצוין") + " שקיבלתי " + when(d) +
         (channel ? " " + channel : "") + "."
       );
       lines.push("");
       var para = [];
       if (d.topic.trim()) para.push("פניתי בנושא " + sentence(d.topic));
-      var subj = n.known ? n.later : g(f, "הוא", "היא");
-      para.push(subj + " " + g(f, "טיפל", "טיפלה") + " בפנייתי " + how +
+      para.push(subj + " " + handled + " " + how +
         (extra ? ", " + g(f, "ואף עשה", "ואף עשתה") + " הרבה מעבר לנדרש" : "") + ".");
       if (d.story.trim()) para.push(sentence(d.story));
       if (d.impact.trim()) para.push(sentence(d.impact));
       lines.push(para.join(" "));
       lines.push("");
       lines.push(
-        "לא פעם כותבים רק כשמשהו משתבש, ולכן חשוב לי לכתוב גם כשמקבלים שירות טוב. " +
-        (n.known ? n.later + " " + g(f, "הוא", "היא") : g(f, "הוא", "היא")) +
-        " דוגמה לשירות במיטבו, ושירות כזה מחזק את אמון הציבור" +
-        (office ? " " + inPlace(office, d.officeFromList) : "") + "."
+        "לפניות הציבור כותבים בדרך כלל כשמשהו משתבש, ולכן חשוב לי לכתוב גם כשמשהו נעשה טוב כל כך. " +
+        "אנשים כמו" + (n.known ? " " + n.later : g(f, "הו", "ה")) + " הם הפנים הטובות של " +
+        (officeShort || "השירות הציבורי") + "."
       );
       lines.push("");
       lines.push(
-        "אודה לכם אם תעבירו מכתב זה " + her + ", לממונה הישיר ולמנהל/ת היחידה, " +
-        "ותתייקו אותו " + fileLine + ". אשמח לאישור קצר על העברתו."
+        "אודה לכם אם תעבירו את המכתב " + her + " ואל הממונים " + onHer +
+        ", ותתייקו אותו " + fileLine + ". אשמח לקבל אישור קצר שהמכתב הועבר."
       );
     }
 
