@@ -281,7 +281,7 @@
         <!-- שלב 4 -->
         <fieldset class="step-panel" data-panel="4" hidden>
           <legend tabindex="-1">המכתב מוכן!</legend>
-          <p class="ready-lead">נשאר רק לשלוח. <a href="#send" class="jump">לדרכי השליחה ↓</a></p>
+          <p class="ready-lead">נשאר רק לשלוח. <strong>האתר לא שולח את המכתב בעצמו:</strong> בחרו למטה איך לשלוח אותו. <a href="#send" class="jump">לדרכי השליחה ↓</a></p>
 
           <label for="subject">נושא</label>
           <input id="subject" dir="auto" name="subject" type="text">
@@ -348,9 +348,16 @@
             <p class="source-note" id="source-note" hidden></p>
           </div>
 
+          <div class="back-check" id="sent-check" hidden role="status">
+            <p><strong>רגע לפני שממשיכים:</strong> האתר לא שולח את המכתב בעצמו. כבר שלחתם אותו בטופס, במייל או ביד?</p>
+            <div class="btn-row">
+              <button type="button" class="btn btn-primary" id="sent-yes">כן, שלחתי ✓</button>
+              <button type="button" class="btn btn-ghost" id="sent-no">עוד לא, תראו לי איך</button>
+            </div>
+          </div>
           <div class="nav-row">
             <button type="button" class="btn btn-ghost" data-prev>חזרה לעריכה</button>
-            <button type="button" class="btn btn-primary" id="sent-btn">שלחתי ✓</button>
+            <button type="button" class="btn btn-primary" id="sent-btn">כבר שלחתי ✓</button>
           </div>
         </fieldset>
 
