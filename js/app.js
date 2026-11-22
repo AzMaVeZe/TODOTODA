@@ -196,7 +196,7 @@
       li.classList.toggle("done", n < step);
       if (n === step) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
     });
-    caption.textContent = step <= 4 ? "שלב " + step + " מתוך 4 · " + STEP_NAMES[step - 1] : "נשלח!";
+    caption.textContent = step <= 4 ? "שלב " + step + " מתוך 4 · " + STEP_NAMES[step - 1] : "סיום";
     hideToast();
     if (step === 4) {
       prepareLetter();
@@ -383,7 +383,7 @@
     return ok;
   }
 
-  document.getElementById("copy-btn").addEventListener("click", copyLetter);
+  document.getElementById("copy-btn").addEventListener("click", function () { tookSendAction = true; copyLetter(); });
   copyOpen.addEventListener("click", function () { // הקישור עצמו פותח את הטופס בחלון חדש
     copyLetter();
     window.track("send-form", "שליחה בטופס");
@@ -393,7 +393,8 @@
   // מי שיצא לטופס, למייל או להדפסה וחזר לאתר: "חזרתם? איך הלך?"
   var backCheck = document.getElementById("back-check");
   var awaiting = false;
-  function awaitReturn() { awaiting = true; }
+  var tookSendAction = false; // האם לחצו על טופס, מייל, הדפסה או העתקה למכתב הזה
+  function awaitReturn() { awaiting = true; tookSendAction = true; }
   function showBackCheck() {
     if (!awaiting || current !== 4) return;
     awaiting = false;
@@ -483,10 +484,24 @@
   function markSent() {
     window.track("sent", "שלחתי ✓");
     backCheck.hidden = true;
+    sentCheck.hidden = true;
     awaiting = false;
     go(5);
   }
-  document.getElementById("sent-btn").addEventListener("click", markSent);
+  // מי שלוחץ «כבר שלחתי» בלי שבחר דרך שליחה: כנראה חשב שהאתר שולח בעצמו
+  var sentCheck = document.getElementById("sent-check");
+  document.getElementById("sent-btn").addEventListener("click", function () {
+    if (tookSendAction) return markSent();
+    window.track("sent-check", "שלחתי בלי לבחור דרך שליחה");
+    sentCheck.hidden = false;
+    sentCheck.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  });
+  document.getElementById("sent-yes").addEventListener("click", markSent);
+  document.getElementById("sent-no").addEventListener("click", function () {
+    window.track("sent-check/not-yet", "עוד לא שלחתי");
+    sentCheck.hidden = true;
+    document.getElementById("send").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  });
 
   // --- "אין לי עכשיו למי להודות": שמירה לפעם הבאה ---
   var notNow = document.getElementById("not-now");
@@ -547,6 +562,7 @@
     delete toEmail.dataset.userEdited;
     delete letterEl.dataset.edited;
     lastBuilt = "";
+    tookSendAction = false;
     go(1);
   });
 })();
